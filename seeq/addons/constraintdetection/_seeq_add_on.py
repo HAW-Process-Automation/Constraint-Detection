@@ -1,28 +1,19 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[5]:
-
-
 import ipyvuetify as v
 import pandas as pd
 
-from _SPyFunctions import get_start_end_display_range
-from _SPyFunctions import pull_signals_from_asset_tree
-from _SPyFunctions import push_signals
-from _SPyFunctions import saturation_treemap
-from _SPyFunctions import push_metadata
-from _SPyFunctions import get_start_end_display_range_from_ids
-from _utils_5 import get_workbook_id_from_url
-from _utils_5 import get_worksheet_url
-from _utils_5 import get_workbook_worksheet_workstep_ids
-from _SaturationDetection_3 import generate_short_gap_capsule
-from _SaturationDetection_3 import saturation_detection
-from _SaturationDetection_3 import generate_metadata
-from _SaturationDetection_3 import generate_constraint_index_table
-
-
-# In[6]:
+from ._SPy_functions import get_start_end_display_range
+from ._SPy_functions import pull_signals_from_asset_tree
+from ._SPy_functions import push_signals
+from ._SPy_functions import saturation_treemap
+from ._SPy_functions import push_metadata
+from ._SPy_functions import get_start_end_display_range_from_ids
+from ._utils import get_workbook_id_from_url
+from ._utils import get_worksheet_url
+from ._utils import get_workbook_worksheet_workstep_ids
+from ._saturation_detection import generate_short_gap_capsule
+from ._saturation_detection import saturation_detection
+from ._saturation_detection import generate_metadata
+from ._saturation_detection import generate_constraint_index_table
 
 
 class HamburgerMenu(v.Menu):
@@ -32,15 +23,28 @@ class HamburgerMenu(v.Menu):
         Constraint Detection Add-on documentation.
         '''
         self.hamburger_button = v.AppBarNavIcon(v_on='menuData.on')
-        self.help_button = v.ListItem(value='help',
-                                      ripple=True,
-                                      href='mailto: applied.research@seeq.com?subject=Correlation Feedback',
-                                      children=[v.ListItemAction(class_='mr-2 ml-0',
-                                                                 children=[v.Icon(color='#212529',
-                                                                                  children=['fa-life-ring'])]),
-                                                v.ListItemActionText(children=[f'Send Support Request'])
-                                                ])
-        self.items = [v.Divider(), self.help_button, v.Divider()]
+        self.issue_button = v.ListItem(value='help',
+                                       ripple=True,
+                                       href='https://github.com/HAW-Process-Automation/Constraint-Detection/issues',
+                                       target='_blank',
+                                       children=[v.ListItemAction(class_='mr-2 ml-0',
+                                                                  children=[v.Icon(color='#212529',
+                                                                                   children=['fa-github'])]),
+                                                 v.ListItemActionText(children=[f'GitHub Issues'])
+                                                 ])
+
+        self.documentation_button = v.ListItem(value='help',
+                                               ripple=True,
+                                               href='https://haw-process-automation.github.io/Constraint-Detection/',
+                                               target='_blank',
+                                               children=[v.ListItemAction(class_='mr-2 ml-0',
+                                                                          children=[v.Icon(color='#212529',
+                                                                                           children=['fa-book'])]),
+                                                         v.ListItemActionText(
+                                                             children=[f'Constraint Detection Documentation'])
+                                                         ])
+
+        self.items = [v.Divider(), self.issue_button, v.Divider(), self.documentation_button, v.Divider()]
 
         super().__init__(offset_y=True,
                          offset_x=False,
@@ -55,9 +59,6 @@ class HamburgerMenu(v.Menu):
                              v.List(children=self.items)
                          ]
                          , **kwargs)
-
-
-# In[4]:
 
 
 class ConstraintDetection():
@@ -422,17 +423,3 @@ class ConstraintDetection():
             ])
         ])
         return self.final_container
-
-
-# In[5]:
-
-
-x = ConstraintDetection()
-x.ConstraintDetectionUI(jupyter_notebook_url)
-
-
-# In[ ]:
-
-
-
-
