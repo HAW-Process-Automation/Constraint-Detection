@@ -1,4 +1,4 @@
-![Treemap](/treemap_use_case_1.png)
+![Treemap](./treemap_use_case_1.png)
 
 **seeq-constraintdetection** is an Add-on for control loop performance monitoring. It is used to find time periods when a control signal is constraint or saturated. This means that the signal is at its minimum or maximum and only 
 deviates from there for short time periods. Control signals include all signals which are related to a control loop: Controller output (OP), setpoint (SP), process variable (PV), manipulated variable (MV) and auto-manual mode. 
@@ -9,7 +9,7 @@ Add-on analyses the OP, SP, PV and MV and visualizes the severity of contraints/
 [Documentation for **seeq-constraintdetection**](https://haw-process-automation.github.io/Constraint-Detection/index.html)
 
 # User Guide
-[**seeq-constraintdetection** User Guide](https://haw-process-automation.github.io/Constraint-Detection/userguide.html) provides an explanation of the required asset tree structure and the workflow. The video below shows how to use the Add-on to perform a plant-wide analysis of control loop data.
+[**seeq-constraintdetection** User Guide](https://haw-process-automation.github.io/Constraint-Detection/userguide.html) provides an explanation of the required asset tree structure and the workflow in the UI. The video below shows how to use the Add-on to perform a plant-wide analysis of control loop data.
 
 # Installation
 The backend of **seeq-constraintdetection** requires **Python 3.7** or later.
@@ -76,7 +76,7 @@ To test the UI, use the `developer_notebook.ipynb` in the `development` folder o
 
 # Support
 
-Code related issues (e.g. bugs, feature requests) can be created in the [issue tracker](https://github.com/HAW-Process-Automation/Constraint-Detection/issues)
+Code related issues (e.g. bugs, feature requests) can be created in the [issue tracker](https://github.com/HAW-Process-Automation/Constraint-Detection/issues).
 
 
 Maintainer: Lea Tiedemann
