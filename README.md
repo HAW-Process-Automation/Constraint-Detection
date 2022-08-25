@@ -1,4 +1,4 @@
-![This is an image](/treemap_use_case_1)
+![Treemap]/treemap_use_case_1.png
 
 The Constraint Detection Add-on is a tool for control loop performance monitoring. It is used to find time periods when a control signal is constraint or saturated. This means that the signal is at its minimum or maximum and only 
 deviates from there for short time periods. Control signals include all signals which are related to a control loop: Controller output (OP), setpoint (SP), process variable (PV), manipulated variable (MV) and auto-manual mode. 
@@ -54,20 +54,22 @@ git clone git@github.com:seeq12/seeq-mps.git
 ## Installation from source
 For development work, it is highly recommended creating a python virtual environment and install the package in that working environment. If you are not familiar with python virtual environments, you can take a look [here](https://docs.python.org/3.8/tutorial/venv.html).
 
-Once your virtual environment is activated, you can install requirements and seeq-constraintdetection from source with: ::
-
-	pip install -r requirements.txt
-	python setup.py install
+Once your virtual environment is activated, you can install requirements and **seeq-constraintdetection** from source with:
+```
+pip install -r requirements.txt
+python setup.py install
+```
 
 ## Testing
-There are several types of testing available for seeq-constraintdetection
+There are several types of testing available for **seeq-constraintdetection**
 
 ### Automatic Testing
 After installation, you can launch the test suite from the `tests` folder in the root directory of the project. You will need to have pytest >= 4.3.1 installed.
 
-To run all tests: ::
-
-	pytest
+To run all tests:
+```
+pytest
+```
 
 ### User Interface Testing
 To test the UI, use the `developer_notebook.ipynb` in the `development` folder of the project. This notebook can also be used while debugging from your IDE.
