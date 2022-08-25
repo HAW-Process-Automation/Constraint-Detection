@@ -1,4 +1,5 @@
-[![N|Scheme](https://github.com/LeaTiedemann/Constraint-Detection/blob/main/HAW_Seeq.PNG)](https://www.seeq.com)
+[![N|Solid](https://github.com/LeaTiedemann/Constraint-Detection/blob/main/HAW_Seeq.PNG)](https://www.seeq.com)
+
 [![N|Scheme](https://github.com/LeaTiedemann/Constraint-Detection/blob/main/treemap_use_case_1.PNG)](https://haw-process-automation.github.io/Constraint-Detection/index.html)
 
 **seeq-constraintdetection** is an Add-on for control loop performance monitoring. It is used to find time periods when a control signal is constraint or saturated. This means that the signal is at its minimum or maximum and only 
