@@ -1,4 +1,4 @@
-[![N|Solid](https://github.com/LeaTiedemann/Constraint-Detection/blob/main/HAW_Seeq.PNG)](https://www.seeq.com)
+[![N|Solid](https://github.com/LeaTiedemann/Constraint-Detection/blob/main/HAW_Seeq.png)](https://www.seeq.com)
 
 [![N|Scheme](https://github.com/LeaTiedemann/Constraint-Detection/blob/main/treemap_use_case_1.PNG)](https://haw-process-automation.github.io/Constraint-Detection/index.html)
 
