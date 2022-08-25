@@ -1,24 +1,24 @@
-![Treemap]/treemap_use_case_1.png
+![Treemap](/treemap_use_case_1.png)
 
-The Constraint Detection Add-on is a tool for control loop performance monitoring. It is used to find time periods when a control signal is constraint or saturated. This means that the signal is at its minimum or maximum and only 
+**seeq-constraintdetection** is an Add-on for control loop performance monitoring. It is used to find time periods when a control signal is constraint or saturated. This means that the signal is at its minimum or maximum and only 
 deviates from there for short time periods. Control signals include all signals which are related to a control loop: Controller output (OP), setpoint (SP), process variable (PV), manipulated variable (MV) and auto-manual mode. 
 Saturation occurs in the OP whereas constraints occur in the PV and MV due to their physical limitations (e.g. measuring range, actuator range) or in the SP (e.g. when model predictive control is applied). The Constraint Detection 
 Add-on analyses the OP, SP, PV and MV and visualizes the severity of contraints/saturation in Treemap View using a Constraint/Saturation Index.
 
 # Documentation
-Documentation for seeq-constraintdetection
+[Documentation for **seeq-constraintdetection**](https://haw-process-automation.github.io/Constraint-Detection/index.html)
 
 # User Guide
-seeq-constraintdetection User Guide provides an explanation of the required asset tree structure and the workflow. The video below shows how to use the Add-on to perform a plant-wide analysis of control loop data.
+[**seeq-constraintdetection** User Guide](https://haw-process-automation.github.io/Constraint-Detection/userguide.html) provides an explanation of the required asset tree structure and the workflow. The video below shows how to use the Add-on to perform a plant-wide analysis of control loop data.
 
 # Installation
-The backend of seeq-constraintdetection requires **Python 3.7** or later.
+The backend of **seeq-constraintdetection** requires **Python 3.7** or later.
 
 ## Dependencies
-See `requirements.txt` file for a list of dependencies and versions. Additionally, you will need to install the `seeq` module with the appropriate version that matches your Seeq server. For more information on the `seeq` module see [seeq at pypi](https://pypi.org/project/seeq/).
+See [`requirements.txt`](https://github.com/HAW-Process-Automation/Constraint-Detection/blob/main/requirements.txt) file for a list of dependencies and versions. Additionally, you will need to install the `seeq` module with the appropriate version that matches your Seeq server. For more information on the `seeq` module see [seeq at pypi](https://pypi.org/project/seeq/).
 
 ## User Installation Requirements (Seeq Data Lab)
-If you want to install seeq-constraintdetection as a Seeq Add-on, you will need:
+If you want to install **seeq-constraintdetection** as a Seeq Add-on, you will need:
 
 * Seeq Data Lab (>=R??? or >=R???)
 * `seeq` module whose version matches the Seeq server version
