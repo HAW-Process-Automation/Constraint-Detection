@@ -65,5 +65,6 @@ Causes for Manipulated Variable Constraints:
 Video: User Guide
 -----------------
 
-
+.. video:: _static/constraint_detection_add-on_userguide.mp4
+   :width: 700
 

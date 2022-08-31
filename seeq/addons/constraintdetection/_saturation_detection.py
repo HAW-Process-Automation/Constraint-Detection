@@ -1,8 +1,9 @@
 import pandas as pd
 import numpy as np
 
+
 def generate_short_gap_capsule(short_gap_number, short_gap_unit, short_capsule_number, short_capsule_unit):
-    '''
+    """
     This function creates string that specify the short gaps and capsules for the High/Medium Constraint Conditions.
 
     Parameters
@@ -23,7 +24,7 @@ def generate_short_gap_capsule(short_gap_number, short_gap_unit, short_capsule_n
         String that contains the length and unit of the short gaps e.g. '2min'
     short_capsule: str
         String that contains the length and unit of the short capsules e.g. '2min'
-    '''
+    """
     if short_gap_unit == 'second(s)':
         short_gap = str(short_gap_number) + 's'
     elif short_gap_unit == 'minute(s)':
@@ -43,9 +44,10 @@ def generate_short_gap_capsule(short_gap_number, short_gap_unit, short_capsule_n
 
     return short_gap, short_capsule
 
+
 def saturation_detection(pulled_signals_df, checkbox_op, checkbox_pv, checkbox_sp, checkbox_mv, lower_threshold,
                          upper_threshold, short_gap_number, short_gap_unit, short_capsule_number, short_capsule_unit):
-    '''
+    """
     This function analyzes every signal in the pulled_signals_df for saturation/constraints and adds the saturation
     signal to the saturation_signals_df and the saturation/constraint index to the saturation_index_df.
 
@@ -82,7 +84,7 @@ def saturation_detection(pulled_signals_df, checkbox_op, checkbox_pv, checkbox_s
         The dataframe which contains all saturation signals.
     saturation_index_df: pd.DataFrame
         The dataframe which contains signal name and contraint index
-    '''
+    """
     signals_for_analysis = []
     if checkbox_op:
         signals_for_analysis = signals_for_analysis + ['Controller Output']
@@ -287,7 +289,7 @@ pd.options.mode.chained_assignment = None
 
 
 def generate_constraint_index_table(saturation_index_df, new_asset_tree_name):
-    '''
+    """
     This functions generates a dictionary with signal name, signal path and constraint index data which is handed over
     to v.DataTable.
 
@@ -302,7 +304,7 @@ def generate_constraint_index_table(saturation_index_df, new_asset_tree_name):
     --------
     saturation_index_dict: dictionary
         The dictionary that contains the signal names, signal paths and constraint index
-    '''
+    """
 
     saturation_index_df = saturation_index_df.sort_values(by=['Index'], ascending=False, ignore_index=True)
     saturation_index_df = saturation_index_df.head(30)
@@ -346,7 +348,7 @@ def generate_constraint_index_table(saturation_index_df, new_asset_tree_name):
 
 
 def generate_metadata(joined_signals_df, new_asset_tree_name):
-    '''
+    """
     This function generates metadata for the new asset tree and formats the column names in the joined_signals_df.
 
     Parameters
@@ -364,7 +366,7 @@ def generate_metadata(joined_signals_df, new_asset_tree_name):
     joined_signals_df: pd.DataFrame
         The dataframe that contains the pulled signals from the original asset tree and the saturation/constraint
         signals with formatted names so that the dataframe can be pushed to the workbook
-    '''
+    """
     # initiate dataframe with name, asset and path to create metadata for signals
     metadata = pd.DataFrame(columns=['Build Asset', 'Build Path'], index=range(len(joined_signals_df.columns)))
 

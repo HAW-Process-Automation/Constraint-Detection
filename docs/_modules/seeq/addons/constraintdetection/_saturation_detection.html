@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>seeq.addons.constraintdetection._saturation_detection &mdash; seeq-constraintdetection 0.1 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../_static/seeq-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html" class="icon icon-home"> seeq-constraintdetection
+            <img src="../../../../_static/Seeq_logo_darkBlue_sm.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../userguide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../usecases.html">Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../codedocumentation.html">Code Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../citation.html">Citation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">seeq-constraintdetection</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      <li>seeq.addons.constraintdetection._saturation_detection</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for seeq.addons.constraintdetection._saturation_detection</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<div class="viewcode-block" id="generate_short_gap_capsule"><a class="viewcode-back" href="../../../../backend_calculations.html#seeq.addons.constraintdetection._saturation_detection.generate_short_gap_capsule">[docs]</a><span class="k">def</span> <span class="nf">generate_short_gap_capsule</span><span class="p">(</span><span class="n">short_gap_number</span><span class="p">,</span> <span class="n">short_gap_unit</span><span class="p">,</span> <span class="n">short_capsule_number</span><span class="p">,</span> <span class="n">short_capsule_unit</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function creates string that specify the short gaps and capsules for the High/Medium Constraint Conditions.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    short_gap_number: int</span>
+<span class="sd">        Integer which specifies the length of the gaps that should be closed in the High/Medium Contraint Conditions</span>
+<span class="sd">    short_gap_unit: str</span>
+<span class="sd">        Unit (seconds. minutes, hours) of the short gaps</span>
+<span class="sd">    short_capsule_number: int</span>
+<span class="sd">        Integer which specifies the length of the capsules that should be ignored in the High/Medium Contraint</span>
+<span class="sd">        Conditions</span>
+<span class="sd">    short_capsule_unit: str</span>
+<span class="sd">        Unit (seconds. minutes, hours) of the short capsules</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    short_gap: str</span>
+<span class="sd">        String that contains the length and unit of the short gaps e.g. &#39;2min&#39;</span>
+<span class="sd">    short_capsule: str</span>
+<span class="sd">        String that contains the length and unit of the short capsules e.g. &#39;2min&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">short_gap_unit</span> <span class="o">==</span> <span class="s1">&#39;second(s)&#39;</span><span class="p">:</span>
+        <span class="n">short_gap</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">short_gap_number</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;s&#39;</span>
+    <span class="k">elif</span> <span class="n">short_gap_unit</span> <span class="o">==</span> <span class="s1">&#39;minute(s)&#39;</span><span class="p">:</span>
+        <span class="n">short_gap</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">short_gap_number</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;min&#39;</span>
+    <span class="k">elif</span> <span class="n">short_gap_unit</span> <span class="o">==</span> <span class="s1">&#39;hour(s)&#39;</span><span class="p">:</span>
+        <span class="n">short_gap</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">short_gap_number</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;h&#39;</span>
+
+    <span class="k">if</span> <span class="n">short_capsule_number</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">short_capsule</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;s&#39;</span>
+    <span class="k">if</span> <span class="n">short_capsule_number</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">short_capsule_unit</span> <span class="o">==</span> <span class="s1">&#39;second(s)&#39;</span><span class="p">:</span>
+            <span class="n">short_capsule</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">short_capsule_number</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;s&#39;</span>
+        <span class="k">elif</span> <span class="n">short_capsule_unit</span> <span class="o">==</span> <span class="s1">&#39;minute(s)&#39;</span><span class="p">:</span>
+            <span class="n">short_capsule</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">short_capsule_number</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;min&#39;</span>
+        <span class="k">elif</span> <span class="n">short_capsule_unit</span> <span class="o">==</span> <span class="s1">&#39;hour(s)&#39;</span><span class="p">:</span>
+            <span class="n">short_capsule</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">short_capsule_number</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;h&#39;</span>
+
+    <span class="k">return</span> <span class="n">short_gap</span><span class="p">,</span> <span class="n">short_capsule</span></div>
+
+
+<div class="viewcode-block" id="saturation_detection"><a class="viewcode-back" href="../../../../backend_calculations.html#seeq.addons.constraintdetection._saturation_detection.saturation_detection">[docs]</a><span class="k">def</span> <span class="nf">saturation_detection</span><span class="p">(</span><span class="n">pulled_signals_df</span><span class="p">,</span> <span class="n">checkbox_op</span><span class="p">,</span> <span class="n">checkbox_pv</span><span class="p">,</span> <span class="n">checkbox_sp</span><span class="p">,</span> <span class="n">checkbox_mv</span><span class="p">,</span> <span class="n">lower_threshold</span><span class="p">,</span>
+                         <span class="n">upper_threshold</span><span class="p">,</span> <span class="n">short_gap_number</span><span class="p">,</span> <span class="n">short_gap_unit</span><span class="p">,</span> <span class="n">short_capsule_number</span><span class="p">,</span> <span class="n">short_capsule_unit</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function analyzes every signal in the pulled_signals_df for saturation/constraints and adds the saturation</span>
+<span class="sd">    signal to the saturation_signals_df and the saturation/constraint index to the saturation_index_df.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    pulled_signals_df: pd.DataFrame</span>
+<span class="sd">        The dataframe with all signals in the original asset tree</span>
+<span class="sd">    checkbox_op: bool</span>
+<span class="sd">        True if OP checkbox is checked. False if OP checkbox is not checked.</span>
+<span class="sd">    checkbox_pv: bool</span>
+<span class="sd">        True if PV checkbox is checked. False if PV checkbox is not checked.</span>
+<span class="sd">    checkbox_sp: bool</span>
+<span class="sd">        True if SP checkbox is checked. False if SP checkbox is not checked.</span>
+<span class="sd">    checkbox_mv: bool</span>
+<span class="sd">        True if MV checkbox is checked. False if MV checkbox is not checked.</span>
+<span class="sd">    lower_threshold: float</span>
+<span class="sd">        The threshold which is used to set the yellow priority colour in treemap and to create the Medium Constraint</span>
+<span class="sd">        Condition.</span>
+<span class="sd">    upper_threshold: float</span>
+<span class="sd">        The threshold which is used to set the red priority colour in treemap and to create the High Constraint</span>
+<span class="sd">        Condition.</span>
+<span class="sd">    short_gap_number: int</span>
+<span class="sd">        Integer which specifies the length of the gaps that should be closed</span>
+<span class="sd">    short_gap_unit: str</span>
+<span class="sd">        Unit (seconds. minutes, hours) of the short gaps</span>
+<span class="sd">    short_capsule_number:int</span>
+<span class="sd">        Integer which specifies the length of the capsule that should be ignored</span>
+<span class="sd">    short_capsule_unit: str</span>
+<span class="sd">        Unit (seconds. minutes, hours) of the short capsules</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    saturation_signals_df: pd.DataFrame</span>
+<span class="sd">        The dataframe which contains all saturation signals.</span>
+<span class="sd">    saturation_index_df: pd.DataFrame</span>
+<span class="sd">        The dataframe which contains signal name and contraint index</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">signals_for_analysis</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">checkbox_op</span><span class="p">:</span>
+        <span class="n">signals_for_analysis</span> <span class="o">=</span> <span class="n">signals_for_analysis</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;Controller Output&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">checkbox_pv</span><span class="p">:</span>
+        <span class="n">signals_for_analysis</span> <span class="o">=</span> <span class="n">signals_for_analysis</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;Process Variable&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">checkbox_sp</span><span class="p">:</span>
+        <span class="n">signals_for_analysis</span> <span class="o">=</span> <span class="n">signals_for_analysis</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;Setpoint&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">checkbox_mv</span><span class="p">:</span>
+        <span class="n">signals_for_analysis</span> <span class="o">=</span> <span class="n">signals_for_analysis</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;Manipulated Variable&#39;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">short_capsule_number</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">short_capsule</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">elif</span> <span class="n">short_capsule_number</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">short_capsule_unit</span> <span class="o">==</span> <span class="s1">&#39;second(s)&#39;</span><span class="p">:</span>
+            <span class="n">short_capsule</span> <span class="o">=</span> <span class="n">short_capsule_number</span>
+        <span class="k">elif</span> <span class="n">short_capsule_unit</span> <span class="o">==</span> <span class="s1">&#39;minute(s)&#39;</span><span class="p">:</span>
+            <span class="n">short_capsule</span> <span class="o">=</span> <span class="n">short_capsule_number</span> <span class="o">*</span> <span class="mi">60</span>
+        <span class="k">elif</span> <span class="n">short_capsule_unit</span> <span class="o">==</span> <span class="s1">&#39;hour(s)&#39;</span><span class="p">:</span>
+            <span class="n">short_capsule</span> <span class="o">=</span> <span class="n">short_capsule_number</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span>
+
+    <span class="k">if</span> <span class="n">short_gap_number</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">short_gap</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">elif</span> <span class="n">short_gap_number</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">short_gap_unit</span> <span class="o">==</span> <span class="s1">&#39;second(s)&#39;</span><span class="p">:</span>
+            <span class="n">short_gap</span> <span class="o">=</span> <span class="n">short_gap_number</span>
+        <span class="k">elif</span> <span class="n">short_gap_unit</span> <span class="o">==</span> <span class="s1">&#39;minute(s)&#39;</span><span class="p">:</span>
+            <span class="n">short_gap</span> <span class="o">=</span> <span class="n">short_gap_number</span> <span class="o">*</span> <span class="mi">60</span>
+        <span class="k">elif</span> <span class="n">short_gap_unit</span> <span class="o">==</span> <span class="s1">&#39;hour(s)&#39;</span><span class="p">:</span>
+            <span class="n">short_gap</span> <span class="o">=</span> <span class="n">short_gap_number</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span>
+
+    <span class="c1"># initiate empty dataframe for saturation signals saturation/constraint index</span>
+    <span class="n">saturation_signals_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+    <span class="n">saturation_index_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Signal Name and Path&#39;</span><span class="p">,</span> <span class="s1">&#39;Signal&#39;</span><span class="p">,</span> <span class="s1">&#39;Path&#39;</span><span class="p">,</span> <span class="s1">&#39;Index&#39;</span><span class="p">])</span>
+
+    <span class="c1"># extended period of saturation: at least 3 consecutive samples have to be saturated to detect saturation</span>
+    <span class="n">ext_length</span> <span class="o">=</span> <span class="mi">3</span>
+
+    <span class="c1"># Loop goes through all signals in the pull_data dataframe</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pulled_signals_df</span><span class="o">.</span><span class="n">columns</span><span class="p">)):</span>
+
+        <span class="k">if</span> <span class="s1">&#39;Mode&#39;</span> <span class="ow">in</span> <span class="n">pulled_signals_df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">x</span><span class="p">]:</span>
+            <span class="c1"># auto manual mode data should not be analysed by the saturation detection</span>
+            <span class="c1"># mode columns are skipped and the loop starts with the next column</span>
+            <span class="k">continue</span>
+
+        <span class="k">if</span> <span class="s1">&#39;Controller Output&#39;</span> <span class="ow">in</span> <span class="n">pulled_signals_df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">x</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="s1">&#39;Controller Output&#39;</span> <span class="ow">in</span> <span class="n">signals_for_analysis</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+        <span class="k">if</span> <span class="s1">&#39;Process Variable&#39;</span> <span class="ow">in</span> <span class="n">pulled_signals_df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">x</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="s1">&#39;Process Variable&#39;</span> <span class="ow">in</span> <span class="n">signals_for_analysis</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+        <span class="k">if</span> <span class="s1">&#39;Setpoint&#39;</span> <span class="ow">in</span> <span class="n">pulled_signals_df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">x</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="s1">&#39;Setpoint&#39;</span> <span class="ow">in</span> <span class="n">signals_for_analysis</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+        <span class="k">if</span> <span class="s1">&#39;Manipulated Variable&#39;</span> <span class="ow">in</span> <span class="n">pulled_signals_df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">x</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="s1">&#39;Manipulated Variable&#39;</span> <span class="ow">in</span> <span class="n">signals_for_analysis</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+        <span class="k">if</span> <span class="s1">&#39;Process Variable&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pulled_signals_df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="ow">and</span> <span class="s1">&#39;Controller Output&#39;</span> <span class="ow">not</span> <span class="ow">in</span> \
+                <span class="n">pulled_signals_df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="ow">and</span> <span class="s1">&#39;Setpoint&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pulled_signals_df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span>
+            <span class="n">x</span><span class="p">]</span> <span class="ow">and</span> <span class="s1">&#39;Manipulated Variable&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pulled_signals_df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="ow">and</span> <span class="s1">&#39;Mode&#39;</span> <span class="ow">not</span> <span class="ow">in</span> \
+                <span class="n">pulled_signals_df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">x</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;&#39;&#39;Check if your asset tree has the required layout. Accepted signal names are &quot;Controller Output&quot;, </span>
+<span class="s1">                &quot;Process Variable&quot;, &quot;Setpoint&quot;, &quot;Manipulated Variable&quot; and &quot;Mode&quot;. See User Guide for more </span>
+<span class="s1">                information on the required layout&#39;&#39;&#39;</span><span class="p">)</span>
+
+            <span class="c1"># format the current column as a numpy array</span>
+        <span class="n">df_column</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">pulled_signals_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">x</span><span class="p">])</span>
+        <span class="c1"># get length of the column</span>
+        <span class="n">df_column_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_column</span><span class="p">)</span>
+        <span class="c1"># calculate derivative of the column data</span>
+        <span class="n">df_column_derivative</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">df_column</span><span class="p">)</span>
+
+        <span class="c1"># calculate minimum and maximum of the column data</span>
+        <span class="n">df_column_min</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">df_column</span><span class="p">)</span>
+        <span class="n">df_column_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">df_column</span><span class="p">)</span>
+
+        <span class="c1"># delta_sat is the width of the saturation band</span>
+        <span class="n">delta_sat</span> <span class="o">=</span> <span class="mf">0.005</span> <span class="o">*</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">df_column_max</span> <span class="o">-</span> <span class="n">df_column_min</span><span class="p">))</span>
+
+        <span class="c1"># initiate variables for saturation counters, extended saturation periods and saturation signal</span>
+        <span class="n">max_sat_counter</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">min_sat_counter</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">sat_signal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">df_column_length</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+
+        <span class="c1"># initiate variables for gap and capsule counters</span>
+        <span class="n">capsule</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">gap</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">capsule_counter</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">gap_counter</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c1"># Loop for saturation detection: Loop goes through every value and checks whether its is in the upper or lower</span>
+        <span class="c1"># saturation band and if the derivative is zero. If 3 consecutive values are in the same saturation band,</span>
+        <span class="c1"># then saturation is detected.</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df_column</span><span class="p">)):</span>
+
+            <span class="k">if</span> <span class="n">df_column</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">df_column_max</span> <span class="o">-</span> <span class="n">delta_sat</span> <span class="ow">and</span> <span class="n">df_column_derivative</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="c1"># current value is in the max saturation band</span>
+                <span class="c1"># start max_sat_counter</span>
+                <span class="n">max_sat_counter</span> <span class="o">=</span> <span class="n">max_sat_counter</span> <span class="o">+</span> <span class="mi">1</span>
+
+                <span class="k">if</span> <span class="n">max_sat_counter</span> <span class="o">==</span> <span class="n">ext_length</span><span class="p">:</span>
+                    <span class="c1"># saturation detected if 3 consecutive samples were saturated --&gt; extended saturation period</span>
+                    <span class="c1"># set max_sat_signal to 1</span>
+                    <span class="n">sat_signal</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">ext_length</span><span class="p">:</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+                <span class="k">elif</span> <span class="n">max_sat_counter</span> <span class="o">&gt;</span> <span class="n">ext_length</span><span class="p">:</span>
+                    <span class="c1"># set sat_signal to 1</span>
+                    <span class="n">sat_signal</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+            <span class="k">elif</span> <span class="n">df_column</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">df_column_min</span> <span class="o">+</span> <span class="n">delta_sat</span> <span class="ow">and</span> <span class="n">df_column_derivative</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="c1"># current value is in the min saturation band</span>
+                <span class="c1"># start min_sat_counter</span>
+                <span class="n">min_sat_counter</span> <span class="o">=</span> <span class="n">min_sat_counter</span> <span class="o">+</span> <span class="mi">1</span>
+
+                <span class="k">if</span> <span class="n">min_sat_counter</span> <span class="o">==</span> <span class="n">ext_length</span><span class="p">:</span>
+                    <span class="c1"># saturation detected if 3 consecutive samples were saturated --&gt; extended saturation period</span>
+                    <span class="c1"># set sat_signal to 1</span>
+                    <span class="n">sat_signal</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">ext_length</span><span class="p">:</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+                <span class="k">elif</span> <span class="n">min_sat_counter</span> <span class="o">&gt;</span> <span class="n">ext_length</span><span class="p">:</span>
+                    <span class="c1"># set min_sat_signal to 1</span>
+                    <span class="n">sat_signal</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># no saturation, reset counters</span>
+                <span class="n">max_sat_counter</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">min_sat_counter</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="n">sat_signal_copy</span> <span class="o">=</span> <span class="n">sat_signal</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sat_signal_copy</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">sat_signal_copy</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">sat_signal_copy</span><span class="p">[</span><span class="n">a</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">gap</span> <span class="o">=</span> <span class="mi">30</span>
+                <span class="n">gap_counter</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">sat_signal_copy</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">sat_signal_copy</span><span class="p">[</span><span class="n">a</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">gap</span> <span class="o">=</span> <span class="n">gap</span> <span class="o">+</span> <span class="mi">30</span>
+                <span class="n">gap_counter</span> <span class="o">=</span> <span class="n">gap_counter</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">sat_signal_copy</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">sat_signal_copy</span><span class="p">[</span><span class="n">a</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">gap</span> <span class="o">=</span> <span class="n">gap</span> <span class="o">+</span> <span class="mi">30</span>
+                <span class="n">gap_counter</span> <span class="o">=</span> <span class="n">gap_counter</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">gap</span> <span class="o">&lt;</span> <span class="n">short_gap</span><span class="p">:</span>
+                    <span class="n">sat_signal_copy</span><span class="p">[</span><span class="n">a</span> <span class="o">-</span> <span class="n">gap_counter</span><span class="p">:</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">sat_signal_copy</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">sat_signal_copy</span><span class="p">[</span><span class="n">a</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">gap</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">gap_counter</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sat_signal_copy</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">sat_signal_copy</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">sat_signal_copy</span><span class="p">[</span><span class="n">a</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">capsule_counter</span> <span class="o">=</span> <span class="n">capsule_counter</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">capsule</span> <span class="o">&lt;</span> <span class="n">short_capsule</span><span class="p">:</span>
+                    <span class="n">sat_signal_copy</span><span class="p">[</span><span class="n">a</span> <span class="o">-</span> <span class="n">capsule_counter</span><span class="p">:</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">elif</span> <span class="n">sat_signal_copy</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">sat_signal_copy</span><span class="p">[</span><span class="n">a</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">capsule</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">capsule_counter</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">elif</span> <span class="n">sat_signal_copy</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">sat_signal_copy</span><span class="p">[</span><span class="n">a</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">capsule</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">capsule_counter</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">elif</span> <span class="n">sat_signal_copy</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">sat_signal_copy</span><span class="p">[</span><span class="n">a</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">capsule</span> <span class="o">=</span> <span class="n">capsule</span> <span class="o">+</span> <span class="mi">30</span>
+                <span class="n">capsule_counter</span> <span class="o">=</span> <span class="n">capsule_counter</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="c1"># saturation index in % is calculated</span>
+        <span class="n">saturation_index</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">sat_signal_copy</span><span class="p">)</span> <span class="o">/</span> <span class="n">df_column_length</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+
+        <span class="c1"># the saturation index is compared to the thresholds. the saturation signal is multiplied with a factor if</span>
+        <span class="c1"># the index lies above the thresholds. the factors are used for the conditions/colors in treemap</span>
+        <span class="c1"># 2 = yellow</span>
+        <span class="c1"># 3 = red</span>
+        <span class="k">if</span> <span class="n">lower_threshold</span> <span class="o">&lt;</span> <span class="n">saturation_index</span> <span class="o">&lt;</span> <span class="n">upper_threshold</span><span class="p">:</span>
+            <span class="n">sat_signal</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sat_signal</span>
+        <span class="k">elif</span> <span class="n">saturation_index</span> <span class="o">&gt;=</span> <span class="n">upper_threshold</span><span class="p">:</span>
+            <span class="n">sat_signal</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">sat_signal</span>
+
+        <span class="c1"># sat_signal is converted into a dataframe</span>
+        <span class="n">sat_signal_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">sat_signal</span><span class="p">)</span>
+        <span class="c1"># renaming the dataframe so that every saturation signal has a unique name</span>
+        <span class="n">signal_name</span> <span class="o">=</span> <span class="n">pulled_signals_df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; Saturation&#39;</span>
+        <span class="n">sat_signal_df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="n">signal_name</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># join the saturation dataframes to saturation_signals_df</span>
+        <span class="n">saturation_signals_df</span> <span class="o">=</span> <span class="n">saturation_signals_df</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sat_signal_df</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">)</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;Signal Name and Path&#39;</span><span class="p">:</span> <span class="n">pulled_signals_df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">x</span><span class="p">],</span> <span class="s1">&#39;Index&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">saturation_index</span><span class="p">,</span> <span class="mi">1</span><span class="p">)}]</span>
+        <span class="n">current_saturation_index_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">saturation_index_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">saturation_index_df</span><span class="p">,</span> <span class="n">current_saturation_index_df</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">saturation_signals_df</span><span class="p">,</span> <span class="n">saturation_index_df</span></div>
+
+
+<span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">mode</span><span class="o">.</span><span class="n">chained_assignment</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<div class="viewcode-block" id="generate_constraint_index_table"><a class="viewcode-back" href="../../../../backend_calculations.html#seeq.addons.constraintdetection._saturation_detection.generate_constraint_index_table">[docs]</a><span class="k">def</span> <span class="nf">generate_constraint_index_table</span><span class="p">(</span><span class="n">saturation_index_df</span><span class="p">,</span> <span class="n">new_asset_tree_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This functions generates a dictionary with signal name, signal path and constraint index data which is handed over</span>
+<span class="sd">    to v.DataTable.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    saturation_index_df: pd.DataFrame</span>
+<span class="sd">        The dataframe that contains the unformatted signal names and constraint index</span>
+<span class="sd">    new_asset_tree_name: str</span>
+<span class="sd">        User specified name for the new asset tree</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    --------</span>
+<span class="sd">    saturation_index_dict: dictionary</span>
+<span class="sd">        The dictionary that contains the signal names, signal paths and constraint index</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">saturation_index_df</span> <span class="o">=</span> <span class="n">saturation_index_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Index&#39;</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">saturation_index_df</span> <span class="o">=</span> <span class="n">saturation_index_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">saturation_index_df</span><span class="o">.</span><span class="n">index</span><span class="p">)):</span>
+        <span class="c1"># split &#39;Signal Name and Path&#39; colum and get the length</span>
+        <span class="n">split_index</span> <span class="o">=</span> <span class="n">saturation_index_df</span><span class="p">[</span><span class="s1">&#39;Signal Name and Path&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &gt;&gt; &quot;</span><span class="p">)</span>
+        <span class="n">split_index_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">split_index</span><span class="p">)</span>
+
+        <span class="c1"># new column name is the asset name + signal name</span>
+        <span class="n">new_signal_name</span> <span class="o">=</span> <span class="n">split_index</span><span class="p">[</span><span class="n">split_index_length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">saturation_index_df</span><span class="p">[</span><span class="s1">&#39;Signal&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_signal_name</span>
+
+        <span class="c1"># loop creates the path column</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">split_index_length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">new_asset_tree_name</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                    <span class="c1"># highest level of the path. The word &quot;Copy&quot; is appended if the user has not specified a name for</span>
+                    <span class="c1"># the asset tree copy.</span>
+                    <span class="n">new_path_name_part</span> <span class="o">=</span> <span class="n">split_index</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; Copy &gt;&gt; &#39;</span>
+                    <span class="n">saturation_index_df</span><span class="p">[</span><span class="s1">&#39;Path&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_path_name_part</span>
+                <span class="k">elif</span> <span class="n">new_asset_tree_name</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                    <span class="c1"># highest level of the path. The user specified name for the asset tree copy is used.</span>
+                    <span class="n">new_path_name_part</span> <span class="o">=</span> <span class="n">new_asset_tree_name</span> <span class="o">+</span> <span class="s1">&#39; &gt;&gt; &#39;</span>
+                    <span class="n">saturation_index_df</span><span class="p">[</span><span class="s1">&#39;Path&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_path_name_part</span>
+
+            <span class="k">elif</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">split_index_length</span> <span class="o">-</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="c1"># intermediate levels of the path</span>
+                <span class="n">new_path_name_part</span> <span class="o">=</span> <span class="n">split_index</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; &gt;&gt; &#39;</span>
+                <span class="n">saturation_index_df</span><span class="p">[</span><span class="s1">&#39;Path&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">saturation_index_df</span><span class="p">[</span><span class="s1">&#39;Path&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">new_path_name_part</span>
+
+            <span class="k">elif</span> <span class="n">x</span> <span class="o">==</span> <span class="n">split_index_length</span> <span class="o">-</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="c1"># lowest level of the path</span>
+                <span class="n">new_path_name_part</span> <span class="o">=</span> <span class="n">split_index</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
+                <span class="n">saturation_index_df</span><span class="p">[</span><span class="s1">&#39;Path&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">saturation_index_df</span><span class="p">[</span><span class="s1">&#39;Path&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">new_path_name_part</span>
+
+    <span class="n">saturation_index_df_final</span> <span class="o">=</span> <span class="n">saturation_index_df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;Signal Name and Path&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">saturation_index_dict</span> <span class="o">=</span> <span class="n">saturation_index_df_final</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s1">&#39;records&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">saturation_index_dict</span></div>
+
+
+<div class="viewcode-block" id="generate_metadata"><a class="viewcode-back" href="../../../../backend_calculations.html#seeq.addons.constraintdetection._saturation_detection.generate_metadata">[docs]</a><span class="k">def</span> <span class="nf">generate_metadata</span><span class="p">(</span><span class="n">joined_signals_df</span><span class="p">,</span> <span class="n">new_asset_tree_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function generates metadata for the new asset tree and formats the column names in the joined_signals_df.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    joined_signals_df: pd.DataFrame</span>
+<span class="sd">        The dataframe that contains the pulled signals from the original asset tree and the saturation/constraint</span>
+<span class="sd">        signals</span>
+<span class="sd">    new_asset_tree_name: str</span>
+<span class="sd">        User specified name for the new asset tree</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    --------</span>
+<span class="sd">    metadata: pd.DataFrame</span>
+<span class="sd">        The dataframe that contains the &#39;Build Asset&#39; and &#39;Build Path&#39; column</span>
+<span class="sd">    joined_signals_df: pd.DataFrame</span>
+<span class="sd">        The dataframe that contains the pulled signals from the original asset tree and the saturation/constraint</span>
+<span class="sd">        signals with formatted names so that the dataframe can be pushed to the workbook</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># initiate dataframe with name, asset and path to create metadata for signals</span>
+    <span class="n">metadata</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Build Asset&#39;</span><span class="p">,</span> <span class="s1">&#39;Build Path&#39;</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">joined_signals_df</span><span class="o">.</span><span class="n">columns</span><span class="p">)))</span>
+
+    <span class="c1"># loop iterates through all signal names and gets the name, asset, and path</span>
+    <span class="c1"># the signals names in joined_signals_df are changed so that spy.push doesn&#39;t get confused</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">joined_signals_df</span><span class="o">.</span><span class="n">columns</span><span class="p">)):</span>
+        <span class="c1"># split current column name and get the length</span>
+        <span class="n">split_index</span> <span class="o">=</span> <span class="n">joined_signals_df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &gt;&gt; &quot;</span><span class="p">)</span>
+        <span class="n">split_index_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">split_index</span><span class="p">)</span>
+
+        <span class="c1"># new column name is the asset name + signal name</span>
+        <span class="n">new_column_name</span> <span class="o">=</span> <span class="n">split_index</span><span class="p">[</span><span class="n">split_index_length</span> <span class="o">-</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">split_index</span><span class="p">[</span><span class="n">split_index_length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">joined_signals_df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="n">joined_signals_df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="n">new_column_name</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># metadata asset is the second last value of the split_index</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;Build Asset&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">split_index</span><span class="p">[</span><span class="n">split_index_length</span> <span class="o">-</span> <span class="mi">2</span><span class="p">]</span>
+        <span class="c1"># loop creates the path column</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">split_index_length</span> <span class="o">-</span> <span class="mi">2</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">split_index_length</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">new_asset_tree_name</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                        <span class="c1"># highest level of the path. The word &quot;Copy&quot; is appended if the user has not specified a name</span>
+                        <span class="c1"># for the asset tree copy.</span>
+                        <span class="n">new_path_name_part</span> <span class="o">=</span> <span class="n">split_index</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; Copy &gt;&gt; &#39;</span>
+                        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;Build Path&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_path_name_part</span>
+                    <span class="k">elif</span> <span class="n">new_asset_tree_name</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                        <span class="c1"># highest level of the path. The user specified name for the asset tree copy is used.</span>
+                        <span class="n">new_path_name_part</span> <span class="o">=</span> <span class="n">new_asset_tree_name</span> <span class="o">+</span> <span class="s1">&#39; &gt;&gt; &#39;</span>
+                        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;Build Path&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_path_name_part</span>
+
+                <span class="k">elif</span> <span class="n">split_index_length</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">new_asset_tree_name</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                        <span class="c1"># highest level of the path. The word &quot;Copy&quot; is appended if the user has not specified a name</span>
+                        <span class="c1"># for the asset tree copy.</span>
+                        <span class="n">new_path_name_part</span> <span class="o">=</span> <span class="n">split_index</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; Copy&#39;</span>
+                        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;Build Path&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_path_name_part</span>
+                    <span class="k">elif</span> <span class="n">new_asset_tree_name</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                        <span class="c1"># highest level of the path. The user specified name for the asset tree copy is used.</span>
+                        <span class="n">new_path_name_part</span> <span class="o">=</span> <span class="n">new_asset_tree_name</span>
+                        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;Build Path&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_path_name_part</span>
+
+            <span class="k">elif</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">split_index_length</span> <span class="o">-</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="c1"># intermediate levels of the path</span>
+                <span class="n">new_path_name_part</span> <span class="o">=</span> <span class="n">split_index</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; &gt;&gt; &#39;</span>
+                <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;Build Path&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;Build Path&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">new_path_name_part</span>
+
+            <span class="k">elif</span> <span class="n">x</span> <span class="o">==</span> <span class="n">split_index_length</span> <span class="o">-</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="c1"># lowest level of the path</span>
+                <span class="n">new_path_name_part</span> <span class="o">=</span> <span class="n">split_index</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
+                <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;Build Path&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;Build Path&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">new_path_name_part</span>
+
+    <span class="k">return</span> <span class="n">metadata</span><span class="p">,</span> <span class="n">joined_signals_df</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Seeq Corporation.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

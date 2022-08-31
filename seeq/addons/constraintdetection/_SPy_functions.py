@@ -8,8 +8,24 @@ import pytz
 import json
 
 
+def get_asset_trees_from_workbook_id(workbook_id):
+    items = spy.search({
+        'Type': 'Signal'
+    }, workbook=workbook_id, quiet=True)
+    items = items[items['Path'].notnull()]
+    items.reset_index(inplace=True)
+    asset_tree_name_list = []
+    for i in range(len(items.index)):
+        split_index = items['Path'][i].split(" >> ")
+        asset_tree_name = split_index[0]
+        if asset_tree_name not in asset_tree_name_list:
+            asset_tree_name_list.append(asset_tree_name)
+
+    return asset_tree_name_list
+
+
 def get_start_end_display_range(url):
-    '''
+    """
     Parameters
     ----------
     url: str
@@ -21,7 +37,7 @@ def get_start_end_display_range(url):
         The start of the display range of the active worksheet
     end: str
         The end of the display range of the active worksheet
-    '''
+    """
 
     worksheet = spy.utils.get_analysis_worksheet_from_url(url, quiet=True)
     start = worksheet.display_range['Start']
@@ -31,7 +47,27 @@ def get_start_end_display_range(url):
 
     return start, end
 
+
 def get_start_end_display_range_from_ids(workbook_id, worksheet_id, workstep_id):
+    """
+    This function gets the start and end of the worksheet display range.
+
+    Parameters
+    ----------
+    workbook_id: str
+        The ID of the workbook
+    worksheet_id: str
+        The ID of the worksheet
+    workstep_id: str
+        The ID of the workstep
+
+    Returns
+    -------
+    start_time: str
+        The start of the display range of the active worksheet
+    end_time: str
+        The end of the display range of the active worksheet
+    """
     workbooks_api = sdk.WorkbooksApi(spy.client)
     data = workbooks_api.get_workstep(workbook_id=workbook_id, worksheet_id=worksheet_id, workstep_id=workstep_id).to_dict()['data']
     data_dict = json.loads(data)
@@ -47,7 +83,7 @@ def get_start_end_display_range_from_ids(workbook_id, worksheet_id, workstep_id)
 
 
 def pull_signals_from_asset_tree(workbook_id, start_time, end_time, asset_tree_name):
-    '''
+    """
     This function pulls all signals between start_time and end_time from the original asset tree in the specified
     workbook.
 
@@ -66,7 +102,7 @@ def pull_signals_from_asset_tree(workbook_id, start_time, end_time, asset_tree_n
     -------
     pulled_signals_df: pd.DataFrame
         The dataframe that contains all signals from the original asset tree
-    '''
+    """
     # search for asset tree by defining the path and workbook
     items = spy.search({
         'Path': asset_tree_name,
@@ -80,7 +116,7 @@ def pull_signals_from_asset_tree(workbook_id, start_time, end_time, asset_tree_n
 
 
 def push_signals(workbook_id, joined_signals_correct_naming_df):
-    '''
+    """
     This function pushes all signals from the original asset tree and the saturation/constraint signals to the
     workbook.
 
@@ -96,17 +132,17 @@ def push_signals(workbook_id, joined_signals_correct_naming_df):
     -------
     push_results: pd.DataFrame
         The dataframe with the push results.
-    '''
+    """
     # push joined_signals_correct_naming_df dataframe to workbench
     # dataframe contains the pulled signals and the saturation signals for the analysed time interval
     push_results = spy.push(data=joined_signals_correct_naming_df, workbook=workbook_id, quiet=True)
     return push_results
 
 class OnlyPushWorksheetsPatch:
-    '''
+    """
     This class is used when pushing the metadata with push_metadata(). It prevents all existing worksheets in the
     workbook from getting archived.
-    '''
+    """
     original_pull_worksheet_ids = spy.workbooks.Workbook._pull_worksheet_ids
     original_worksheet_push = spy.workbooks.Worksheet.push
 
@@ -129,8 +165,9 @@ class OnlyPushWorksheetsPatch:
         spy.workbooks.Worksheet.push = cls.original_worksheet_push
 
 
-def saturation_treemap(metadata, start, end, short_gap, short_capsule, checkbox_op, checkbox_pv, checkbox_sp, checkbox_mv):
-    '''
+def saturation_treemap(metadata, start, end, short_gap, short_capsule, checkbox_op, checkbox_pv, checkbox_sp,
+                       checkbox_mv):
+    """
     This function generates the new asset tree with all signals, High Constraint Condition, Medium Constraint Condition
     and Contraint/Saturation Indices. Controller Outputs will be referred to as OP, Process Variables will be referred
     to as PV, Setpoints will be referred to as SP and Manipulated Variables will be referred to as MV. The function also
@@ -161,20 +198,20 @@ def saturation_treemap(metadata, start, end, short_gap, short_capsule, checkbox_
     -------
     spy.assets.build(Treemap_AssetStructure, metadata=metadata, quiet=True): pd.DataFrame
         The dataframe with the metadata for the new asset tree with all signals, conditions and constraint indices
-    '''
+    """
 
     time_capsule = '$condition = condition(capsule("' + start + '", "' + end + '"))'
     medium_saturation_condition = '($sat==2).merge(' + short_gap + ').removeShorterThan(' + short_capsule + ')'
     high_saturation_condition = '($sat==3).merge(' + short_gap + ').removeShorterThan(' + short_capsule + ')'
-    saturation_index_condition = '$saturation = ($sat>0).merge(' + short_gap + ').removeShorterThan(' + short_capsule + ')'
+    saturation_index_condition = '$saturation = ($sat>0).merge('+short_gap+').removeShorterThan('+short_capsule+')'
 
     class Treemap_AssetStructure(Asset):
-        '''
+        """
         This class creates all signal (OP, PV, SP, MV), the corresponding constraint/saturation signals and the
         constraint/saturation indices. It also creates the High Constraint Condition and Medium Constraint Condition.
         The signals and conditions are arranged in an asset tree using the metadata. The asset tree is visualized in
         treemap in a new worksheet.
-        '''
+        """
 
         @Asset.Attribute()
         def OP(self, metadata):
@@ -296,7 +333,8 @@ def saturation_treemap(metadata, start, end, short_gap, short_capsule, checkbox_
         def OP_Saturation_Index(self, metadata):
             return {
                 'Type': 'Signal',
-                'Formula': time_capsule + saturation_index_condition + f'''$saturation.aggregate(percentDuration(), $condition, middleKey(), 0s)''',
+                'Formula': time_capsule + saturation_index_condition + f'''$saturation.aggregate(percentDuration(), 
+                $condition, middleKey(), 0s)''',
                 'Formula Parameters': {
                     '$sat': self.OP_Saturation_Signal(metadata),
                 }
@@ -306,7 +344,8 @@ def saturation_treemap(metadata, start, end, short_gap, short_capsule, checkbox_
         def PV_Constraint_Index(self, metadata):
             return {
                 'Type': 'Signal',
-                'Formula': time_capsule + saturation_index_condition + f'''$saturation.aggregate(percentDuration(), $condition, middleKey(), 0s)''',
+                'Formula': time_capsule + saturation_index_condition + f'''$saturation.aggregate(percentDuration(), 
+                $condition, middleKey(), 0s)''',
                 'Formula Parameters': {
                     '$sat': self.PV_Constraint_Signal(metadata),
                 }
@@ -316,7 +355,8 @@ def saturation_treemap(metadata, start, end, short_gap, short_capsule, checkbox_
         def SP_Constraint_Index(self, metadata):
             return {
                 'Type': 'Signal',
-                'Formula': time_capsule + saturation_index_condition + f'''$saturation.aggregate(percentDuration(), $condition, middleKey(), 0s)''',
+                'Formula': time_capsule + saturation_index_condition + f'''$saturation.aggregate(percentDuration(), 
+                $condition, middleKey(), 0s)''',
                 'Formula Parameters': {
                     '$sat': self.SP_Constraint_Signal(metadata),
                 }
@@ -326,7 +366,8 @@ def saturation_treemap(metadata, start, end, short_gap, short_capsule, checkbox_
         def MV_Constraint_Index(self, metadata):
             return {
                 'Type': 'Signal',
-                'Formula': time_capsule + saturation_index_condition + f'''$saturation.aggregate(percentDuration(), $condition, middleKey(), 0s)''',
+                'Formula': time_capsule + saturation_index_condition + f'''$saturation.aggregate(percentDuration(), 
+                $condition, middleKey(), 0s)''',
                 'Formula Parameters': {
                     '$sat': self.MV_Constraint_Signal(metadata),
                 }
@@ -344,7 +385,7 @@ def saturation_treemap(metadata, start, end, short_gap, short_capsule, checkbox_
                 'End': end
             }
 
-            if checkbox_op == True:
+            if checkbox_op:
                 workstep.display_items = [{
                     'Item': self.OP()
                 }, {
@@ -361,7 +402,7 @@ def saturation_treemap(metadata, start, end, short_gap, short_capsule, checkbox_
                     'Color': '#ffdd52'
                 }]
 
-            elif checkbox_pv == True:
+            elif checkbox_pv:
                 workstep.display_items = [{
                     'Item': self.PV()
                 }, {
@@ -377,7 +418,23 @@ def saturation_treemap(metadata, start, end, short_gap, short_capsule, checkbox_
                     'Color': '#ffdd52'
                 }]
 
-            elif checkbox_sp == True:
+            elif checkbox_sp:
+                workstep.display_items = [{
+                    'Item': self.SP()
+                }, {
+                    'Item': self.SP_Constraint_Signal()
+                }, {
+                    'Item': self.SP_Constraint_Index(),
+                    'Samples Display': 'Bars'
+                }, {
+                    'Item': self.High_SP_Constraint(),
+                    'Color': '#ff0000'
+                }, {
+                    'Item': self.Medium_SP_Constraint(),
+                    'Color': '#ffdd52'
+                }]
+
+            elif checkbox_mv:
                 workstep.display_items = [{
                     'Item': self.SP()
                 }, {
@@ -396,6 +453,7 @@ def saturation_treemap(metadata, start, end, short_gap, short_capsule, checkbox_
 
     return spy.assets.build(Treemap_AssetStructure, metadata=metadata, quiet=True)
 
+
 @contextmanager
 def patching():
     OnlyPushWorksheetsPatch.on()
@@ -404,8 +462,9 @@ def patching():
     finally:
         OnlyPushWorksheetsPatch.off()
 
+
 def push_metadata(workbook_id, build_df):
-    '''
+    """
     This function pushes the metadata for the new asset structure to the workbook.
 
     Parameters
@@ -414,7 +473,7 @@ def push_metadata(workbook_id, build_df):
         The ID of the workbook
     build_df: pd.DataFrame
         The dataframe with the metadata for the new asset tree
-    '''
+    """
 
     # push build_df with asset structure to the workbench
     # controller signals and saturation detection results are now arranged as in the original asset tree.
