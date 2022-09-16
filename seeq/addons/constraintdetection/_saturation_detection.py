@@ -389,7 +389,7 @@ def generate_metadata(joined_signals_df, new_asset_tree_name):
                     if new_asset_tree_name == '':
                         # highest level of the path. The word "Copy" is appended if the user has not specified a name
                         # for the asset tree copy.
-                        new_path_name_part = split_index[x] + ' Copy >> '
+                        new_path_name_part = split_index[x] + ' Constraint Monitor >> '
                         metadata['Build Path'][i] = new_path_name_part
                     elif new_asset_tree_name != '':
                         # highest level of the path. The user specified name for the asset tree copy is used.
@@ -400,7 +400,7 @@ def generate_metadata(joined_signals_df, new_asset_tree_name):
                     if new_asset_tree_name == '':
                         # highest level of the path. The word "Copy" is appended if the user has not specified a name
                         # for the asset tree copy.
-                        new_path_name_part = split_index[x] + ' Copy'
+                        new_path_name_part = split_index[x] + ' Constraint Monitor'
                         metadata['Build Path'][i] = new_path_name_part
                     elif new_asset_tree_name != '':
                         # highest level of the path. The user specified name for the asset tree copy is used.
@@ -418,3 +418,164 @@ def generate_metadata(joined_signals_df, new_asset_tree_name):
                 metadata['Build Path'][i] = metadata['Build Path'][i] + new_path_name_part
 
     return metadata, joined_signals_df
+
+
+def recalculate_saturation_index(pulled_signals_df, short_capsule_number, short_capsule_unit, short_gap_number,
+                                 short_gap_unit):
+    """
+    This function is called when the recalculate button is clicked. The function calculates the constrained time
+    percentage from the constraint/saturation signals and generates a dataframe that contains the columns
+    'Signal Name and Path', 'Signal', 'Path' and 'Index'.
+
+    Parameters
+    ----------
+    pulled_signals_df: pd.DataFrame
+        The dataframe that contains the saturation/constraint signals
+    short_capsule_number: int
+        Integer which specifies the length of the capsules that should be closed in the High/Medium Contraint Conditions
+    short_capsule_unit: str
+        Unit (seconds. minutes, hours) of the short capsules
+    short_gap_number: int
+        Integer which specifies the length of the gaps that should be closed in the High/Medium Contraint Conditions
+    short_gap_unit: str
+        Unit (seconds. minutes, hours) of the short gaps
+
+    Returns
+    --------
+    saturation_index_df: pd.DataFrame
+        The dictionary that contains the signal names, signal paths and constrained time percentage
+    """
+    if short_capsule_number == 0:
+        short_capsule = 0
+    elif short_capsule_number > 0:
+        if short_capsule_unit == 'second(s)':
+            short_capsule = short_capsule_number
+        elif short_capsule_unit == 'minute(s)':
+            short_capsule = short_capsule_number * 60
+        elif short_capsule_unit == 'hour(s)':
+            short_capsule = short_capsule_number * 60 * 60
+
+    if short_gap_number == 0:
+        short_gap = 0
+    elif short_gap_number > 0:
+        if short_gap_unit == 'second(s)':
+            short_gap = short_gap_number
+        elif short_gap_unit == 'minute(s)':
+            short_gap = short_gap_number * 60
+        elif short_gap_unit == 'hour(s)':
+            short_gap = short_gap_number * 60 * 60
+
+    saturation_index_df = pd.DataFrame(columns=['Signal Name and Path', 'Signal', 'Path', 'Index'])
+
+    for x in range(len(pulled_signals_df.columns)):
+        sat_signal_copy = np.asarray(pulled_signals_df.iloc[:, x])
+        # get length of the column
+        df_column_length = len(sat_signal_copy)
+
+        if max(sat_signal_copy) == 3:
+            sat_signal_copy = sat_signal_copy / 3
+        if max(sat_signal_copy) == 2:
+            sat_signal_copy = sat_signal_copy / 2
+
+        # initiate variables for gap and capsule counters
+        capsule = 0
+        gap = 0
+        capsule_counter = 0
+        gap_counter = 0
+
+        for a in range(len(sat_signal_copy)):
+            if sat_signal_copy[a] == 0 and sat_signal_copy[a - 1] == 1:
+                gap = 30
+                gap_counter = 1
+            elif sat_signal_copy[a] == 0 and sat_signal_copy[a - 1] == 0:
+                gap = gap + 30
+                gap_counter = gap_counter + 1
+            elif sat_signal_copy[a] == 1 and sat_signal_copy[a - 1] == 0:
+                gap = gap + 30
+                gap_counter = gap_counter + 1
+                if gap < short_gap:
+                    sat_signal_copy[a - gap_counter:a] = 1
+            elif sat_signal_copy[a] == 1 and sat_signal_copy[a - 1] == 1:
+                gap = 0
+                gap_counter = 0
+
+        for a in range(len(sat_signal_copy)):
+            if sat_signal_copy[a] == 0 and sat_signal_copy[a - 1] == 1:
+                capsule_counter = capsule_counter + 1
+                if capsule < short_capsule:
+                    sat_signal_copy[a - capsule_counter:a] = 0
+            elif sat_signal_copy[a] == 0 and sat_signal_copy[a - 1] == 0:
+                capsule = 0
+                capsule_counter = 0
+            elif sat_signal_copy[a] == 1 and sat_signal_copy[a - 1] == 0:
+                capsule = 0
+                capsule_counter = 0
+            elif sat_signal_copy[a] == 1 and sat_signal_copy[a - 1] == 1:
+                capsule = capsule + 30
+                capsule_counter = capsule_counter + 1
+
+        # saturation index in % is calculated
+        saturation_index = float(sum(sat_signal_copy) / df_column_length * 100)
+
+        data = [{'Signal Name and Path': pulled_signals_df.columns[x], 'Index': round(saturation_index, 1)}]
+        current_saturation_index_df = pd.DataFrame(data)
+        saturation_index_df = pd.concat([saturation_index_df, current_saturation_index_df], ignore_index=True)
+
+    return saturation_index_df
+
+
+def recalculate_constraint_index_table(saturation_index_df):
+    """
+    This function is called when the recalculate button is clicked. The function generates a dictionary with signal
+    name, signal path and constraint index data which is handed over to v.DataTable.
+
+    Parameters
+    ----------
+    saturation_index_df: pd.DataFrame
+        The dataframe that contains the unformatted signal names and constrained time percentage
+
+    Returns
+    --------
+    saturation_index_dict: dictionary
+        The dictionary that contains the signal names, signal paths and constrained time percentage
+    """
+
+    saturation_index_df = saturation_index_df.sort_values(by=['Index'], ascending=False, ignore_index=True)
+    saturation_index_df = saturation_index_df.head(30)
+
+    for i in range(len(saturation_index_df.index)):
+        # split 'Signal Name and Path' colum and get the length
+        split_index = saturation_index_df['Signal Name and Path'][i].split(" >> ")
+        split_index_length = len(split_index)
+
+        # new column name is the asset name + signal name
+        signal_name = split_index[split_index_length - 1]
+        if 'OP' in signal_name:
+            saturation_index_df['Signal'][i] = 'Controller Output'
+        if 'PV' in signal_name:
+            saturation_index_df['Signal'][i] = 'Process Variable'
+        if 'SP' in signal_name:
+            saturation_index_df['Signal'][i] = 'Setpoint'
+        if 'MV' in signal_name:
+            saturation_index_df['Signal'][i] = 'Manipulated Variable'
+
+        # loop creates the path column
+        for x in range(split_index_length - 1):
+            if x == 0:
+                # highest level of the path.
+                saturation_index_df['Path'][i] = split_index[x] + ' >> '
+
+            elif x < split_index_length - 2:
+                # intermediate levels of the path
+                new_path_name_part = split_index[x] + ' >> '
+                saturation_index_df['Path'][i] = saturation_index_df['Path'][i] + new_path_name_part
+
+            elif x == split_index_length - 2:
+                # lowest level of the path
+                new_path_name_part = split_index[x]
+                saturation_index_df['Path'][i] = saturation_index_df['Path'][i] + new_path_name_part
+
+    saturation_index_df_final = saturation_index_df.drop(['Signal Name and Path'], axis=1)
+    saturation_index_dict = saturation_index_df_final.to_dict('records')
+
+    return saturation_index_dict

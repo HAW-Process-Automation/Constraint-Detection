@@ -1,9 +1,10 @@
 from contextlib import contextmanager
 
 from seeq import spy
+from seeq import sdk
 from seeq.spy.assets import Asset
 import datetime
-from seeq import sdk
+
 import pytz
 import json
 
@@ -203,7 +204,7 @@ def saturation_treemap(metadata, start, end, short_gap, short_capsule, checkbox_
     time_capsule = '$condition = condition(capsule("' + start + '", "' + end + '"))'
     medium_saturation_condition = '($sat==2).merge(' + short_gap + ').removeShorterThan(' + short_capsule + ')'
     high_saturation_condition = '($sat==3).merge(' + short_gap + ').removeShorterThan(' + short_capsule + ')'
-    saturation_index_condition = '$saturation = ($sat>0).merge('+short_gap+').removeShorterThan('+short_capsule+')'
+    saturation_index_condition = '$saturation = ($sat>0).merge(' + short_gap + ').removeShorterThan(' + short_capsule + ')'
 
     class Treemap_AssetStructure(Asset):
         """
@@ -330,7 +331,7 @@ def saturation_treemap(metadata, start, end, short_gap, short_capsule, checkbox_
             }
 
         @Asset.Attribute()
-        def OP_Saturation_Index(self, metadata):
+        def OP_Saturated_Time_Percentage(self, metadata):
             return {
                 'Type': 'Signal',
                 'Formula': time_capsule + saturation_index_condition + f'''$saturation.aggregate(percentDuration(), 
@@ -341,7 +342,7 @@ def saturation_treemap(metadata, start, end, short_gap, short_capsule, checkbox_
             }
 
         @Asset.Attribute()
-        def PV_Constraint_Index(self, metadata):
+        def PV_Constrained_Time_Percentage(self, metadata):
             return {
                 'Type': 'Signal',
                 'Formula': time_capsule + saturation_index_condition + f'''$saturation.aggregate(percentDuration(), 
@@ -352,7 +353,7 @@ def saturation_treemap(metadata, start, end, short_gap, short_capsule, checkbox_
             }
 
         @Asset.Attribute()
-        def SP_Constraint_Index(self, metadata):
+        def SP_Constrained_Time_Percentage(self, metadata):
             return {
                 'Type': 'Signal',
                 'Formula': time_capsule + saturation_index_condition + f'''$saturation.aggregate(percentDuration(), 
@@ -363,7 +364,7 @@ def saturation_treemap(metadata, start, end, short_gap, short_capsule, checkbox_
             }
 
         @Asset.Attribute()
-        def MV_Constraint_Index(self, metadata):
+        def MV_Constrained_Time_Percentage(self, metadata):
             return {
                 'Type': 'Signal',
                 'Formula': time_capsule + saturation_index_condition + f'''$saturation.aggregate(percentDuration(), 
@@ -375,23 +376,22 @@ def saturation_treemap(metadata, start, end, short_gap, short_capsule, checkbox_
 
         @Asset.Display()
         def Ambient_Conditions(self, metadata, analysis):
-            worksheet = analysis.worksheet('Constraint Detection Treemap View')
-
-            # define a workstep with the display_items that we want on the trend.
-            workstep = worksheet.workstep('Alarm_Tree_Map')
-            workstep.view = 'Treemap'
-            workstep.display_range = {
-                'Start': start,
-                'End': end
-            }
 
             if checkbox_op:
+                worksheet = analysis.worksheet('OP Saturation Detection Treemap')
+                workstep = worksheet.workstep('OP_Treemap')
+                workstep.view = 'Treemap'
+                workstep.display_range = {
+                    'Start': start,
+                    'End': end
+                }
+
                 workstep.display_items = [{
                     'Item': self.OP()
                 }, {
                     'Item': self.OP_Saturation_Signal()
                 }, {
-                    'Item': self.OP_Saturation_Index(),
+                    'Item': self.OP_Saturated_Time_Percentage(),
                     'Samples Display': 'Bars',
                     'Line Width': 20
                 }, {
@@ -402,14 +402,23 @@ def saturation_treemap(metadata, start, end, short_gap, short_capsule, checkbox_
                     'Color': '#ffdd52'
                 }]
 
-            elif checkbox_pv:
+            if checkbox_pv:
+                worksheet = analysis.worksheet('PV Constraint Detection Treemap')
+                workstep = worksheet.workstep('PV_Treemap')
+                workstep.view = 'Treemap'
+                workstep.display_range = {
+                    'Start': start,
+                    'End': end
+                }
+
                 workstep.display_items = [{
                     'Item': self.PV()
                 }, {
                     'Item': self.PV_Constraint_Signal()
                 }, {
-                    'Item': self.PV_Constraint_Index(),
-                    'Samples Display': 'Bars'
+                    'Item': self.PV_Constrained_Time_Percentage(),
+                    'Samples Display': 'Bars',
+                    'Line Width': 20
                 }, {
                     'Item': self.High_PV_Constraint(),
                     'Color': '#ff0000'
@@ -418,14 +427,23 @@ def saturation_treemap(metadata, start, end, short_gap, short_capsule, checkbox_
                     'Color': '#ffdd52'
                 }]
 
-            elif checkbox_sp:
+            if checkbox_sp:
+                worksheet = analysis.worksheet('SP Constraint Detection Treemap')
+                workstep = worksheet.workstep('SP_Treemap')
+                workstep.view = 'Treemap'
+                workstep.display_range = {
+                    'Start': start,
+                    'End': end
+                }
+
                 workstep.display_items = [{
                     'Item': self.SP()
                 }, {
                     'Item': self.SP_Constraint_Signal()
                 }, {
-                    'Item': self.SP_Constraint_Index(),
-                    'Samples Display': 'Bars'
+                    'Item': self.SP_Constrained_Time_Percentage(),
+                    'Samples Display': 'Bars',
+                    'Line Width': 20
                 }, {
                     'Item': self.High_SP_Constraint(),
                     'Color': '#ff0000'
@@ -434,19 +452,28 @@ def saturation_treemap(metadata, start, end, short_gap, short_capsule, checkbox_
                     'Color': '#ffdd52'
                 }]
 
-            elif checkbox_mv:
+            if checkbox_mv:
+                worksheet = analysis.worksheet('MV Constraint Detection Treemap')
+                workstep = worksheet.workstep('MV_Treemap')
+                workstep.view = 'Treemap'
+                workstep.display_range = {
+                    'Start': start,
+                    'End': end
+                }
+
                 workstep.display_items = [{
-                    'Item': self.SP()
+                    'Item': self.MV()
                 }, {
-                    'Item': self.SP_Constraint_Signal()
+                    'Item': self.MV_Constraint_Signal()
                 }, {
-                    'Item': self.SP_Constraint_Index(),
-                    'Samples Display': 'Bars'
+                    'Item': self.MV_Constrained_Time_Percentage(),
+                    'Samples Display': 'Bars',
+                    'Line Width': 20
                 }, {
-                    'Item': self.High_SP_Constraint(),
+                    'Item': self.High_MV_Constraint(),
                     'Color': '#ff0000'
                 }, {
-                    'Item': self.Medium_SP_Constraint(),
+                    'Item': self.Medium_MV_Constraint(),
                     'Color': '#ffdd52'
                 }]
             return workstep
@@ -480,3 +507,75 @@ def push_metadata(workbook_id, build_df):
     # A copy asset tree was generated to not clutter the original asset tree with random signals and conditions
     with patching():
         spy.push(metadata=build_df, workbook=workbook_id, quiet=True)
+
+
+def recalculate_change_short_gap_capsule(asset_tree_name, original_asset_tree_name, start_time, end_time, workbook_id,
+                                         short_gap, short_capsule):
+    """
+    This function recalculates the formula for the High/Medium Constraint Condition and the Constrained/Saturated Time
+    Percentage. It pulls all saturation/constraint signals from the new asset tree, so that the Constrained/Saturated
+    Time Percentage for the table in the UI can be recalculated as well.
+
+    Parameters
+    ----------
+    asset_tree_name: str
+        User specified name for the new asset tree
+    original_asset_tree_name: str
+        Selected asset tree for the analysis
+    start_time: str
+        The start time for the analysis
+    end_time: str
+        The end time for the analysis
+    workbook_id: str
+        The ID of the workbook
+    short_gap: str
+        String that specifies short gaps which should be closed in the High/Medium Constraint Condition
+    short_capsule: str
+        String that specifies short capsules which should be ignored in the High/Medium Constraint Condition
+
+    Returns
+    -------
+    pulled_signals_df: pd.DataFrame
+        A dataframe with all saturation/constraint signals in the new asset tree
+    """
+    if asset_tree_name == '':
+        asset_tree_name = original_asset_tree_name + ' Constraint Monitor'
+
+    saturation_signal_df = spy.search({
+        'Path': asset_tree_name,
+        'Name': 'Signal',
+        'Type': 'Signal'
+    }, workbook=workbook_id, all_properties=True, quiet=True)
+
+    pulled_signals_df = spy.pull(saturation_signal_df, start=start_time, end=end_time, grid='30 s', quiet=True)
+
+    index_df = spy.search({
+        'Path': asset_tree_name,
+        'Name': 'Time Percentage'
+    }, workbook=workbook_id, all_properties=True, quiet=True)
+
+    start = pulled_signals_df.index[0].isoformat()
+    end = pulled_signals_df.index[-1].isoformat()
+
+    time_capsule = '$condition = condition(capsule("' + start + '", "' + end + '"))'
+    saturation_index_condition = '$saturation = ($sat>0).merge('+short_gap+').removeShorterThan('+short_capsule+')'
+    index_formula = time_capsule + saturation_index_condition + f'''$saturation.aggregate(percentDuration(), 
+    $condition, middleKey(), 0s)'''
+    index_df['Formula'] = index_formula
+
+    conditions_df = spy.search({
+        'Path': asset_tree_name,
+        'Type': 'Condition'
+    }, workbook=workbook_id, all_properties=True, quiet=True)
+
+    for i in range(len(conditions_df.index)):
+        if 'High' in conditions_df['Name'][i]:
+            conditions_df['Formula'][i] = '($sat==3).merge(' + short_gap + ').removeShorterThan(' + short_capsule + ')'
+        elif 'Medium' in conditions_df['Name'][i]:
+            conditions_df['Formula'][i] = '(($sat==2).intersect($sat.derivative()==0)).merge(' + short_gap + \
+                                          ').removeShorterThan(' + short_capsule + ') '
+
+    spy.push(metadata=conditions_df, workbook=workbook_id, quiet=True)
+    spy.push(metadata=index_df, workbook=workbook_id, quiet=True)
+
+    return pulled_signals_df
