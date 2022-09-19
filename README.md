@@ -5,7 +5,7 @@
 **seeq-constraintdetection** is an Add-on for control loop performance monitoring. It is used to find time periods when a control signal is constrained or saturated. This means that the signal is at its minimum or maximum and only 
 deviates from there for short time periods. Control signals include all signals which are related to a control loop: Controller output (OP), setpoint (SP), process variable (PV), manipulated variable (MV) and auto-manual mode. 
 Saturation occurs in the OP whereas constraints occur in the PV and MV due to their physical limitations (e.g. measuring range, actuator range) or in the SP (e.g. when model predictive control is applied). The Constraint Detection 
-Add-on analyses the OP, SP, PV and MV and and generates a worksheet in treemap view where every controller panel is coloured according to the time-percentage a signal is constrained/saturated in the analysis time period
+Add-on analyses the OP, SP, PV and MV and and generates a worksheet in treemap view where every controller panel is coloured according to the time-percentage a signal is constrained/saturated in the analysis time period.
 
 # Documentation
 [Documentation for **seeq-constraintdetection**](https://haw-process-automation.github.io/Constraint-Detection/index.html)
@@ -13,7 +13,7 @@ Add-on analyses the OP, SP, PV and MV and and generates a worksheet in treemap v
 # User Guide
 [**seeq-constraintdetection** User Guide](https://haw-process-automation.github.io/Constraint-Detection/userguide.html) provides an explanation of the required asset tree structure and the workflow in the UI. The video below shows how to use the Add-on to perform a plant-wide analysis of control loop data.
 
-[![User Guide Video](https://github.com/HAW-Process-Automation/Constraint-Detection/blob/main/docs_src/images/introduction_treemap.PNG)](https://github.com/HAW-Process-Automation/Constraint-Detection/blob/main/docs_src/_static/constraint_detection_add-on_userguide.mp4)
+https://user-images.githubusercontent.com/111488243/190984559-b1b7d7b1-7782-437c-8ed6-e4f5cb3d411e.mp4
 
 # Installation
 The backend of **seeq-constraintdetection** requires **Python 3.7** or later.
@@ -52,7 +52,7 @@ We welcome new contributors of all experience levels. The Development Guide has 
 ## Source code
 You can get started by cloning the repository with the command: 
 ```
-git clone git@github.com:seeq12/seeq-mps.git
+git clone git@github.com:HAW-Process-Automation/seeq-constraintdetection.git
 ```
 
 ## Installation from source
