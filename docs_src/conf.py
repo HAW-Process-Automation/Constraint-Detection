@@ -11,8 +11,9 @@
 #
 import os
 import sys
+
 sys.path.insert(0, os.path.abspath('../..'))
-#from seeq.addons import constraintdetection
+# from seeq.addons import constraintdetection
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
@@ -31,7 +32,6 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.intersphinx',
     'sphinx.ext.viewcode',
-    'myst_parser',
     'sphinxcontrib.video'
 ]
 napoleon_google_docstring = False
@@ -40,13 +40,11 @@ napoleon_numpy_docstring = True
 templates_path = ['_templates']
 exclude_patterns = []
 
-
-
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 import sphinx_rtd_theme
+
 html_theme = 'sphinx_rtd_theme'
 html_favicon = 'images/seeq-favicon.ico'
 html_logo = 'images/Seeq_logo_darkBlue_sm.png'
 html_static_path = ['_static']
-
