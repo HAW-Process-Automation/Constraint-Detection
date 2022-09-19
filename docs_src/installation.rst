@@ -13,7 +13,7 @@ User Installation Requirements (Seeq Data Lab)
 ----------------------------------------------
 If you want to install **seeq-constraintdetection** as a Seeq Add-on Tool, you will need:
 
-* Seeq Data Lab (>= RXXX, >= RXXX, or >= RXXX)
+* Seeq Data Lab (>= R54.1.6 or >= R56.1.4)
 * :code:`seeq` module whose version matches the Seeq server version
 * Seeq administrator access
 * Enable Add-on Tools in the Seeq server
@@ -39,15 +39,13 @@ You can get started by cloning the repository with the command: ::
 
 	git clone git@github.com:HAW-Process-Automation/Constraint-Detection.git
 
-For development work, it is highly recommended creating a python virtual environment and install the package in that working environment. if you are not familiar with python virtual environments, you can take a look `here <https://docs.python.org/3.8/tutorial/venv.html>`_.
+For development work, it is highly recommended creating a python virtual environment and install the package in that working environment. If you are not familiar with python virtual environments, you can take a look `here <https://docs.python.org/3.8/tutorial/venv.html>`_.
 
 Once your virtual environment is activated, you can install requirements and **seeq-constraintdetection** from source with: ::
 
 	pip install -r requirements.txt
 	python setup.py install
 
-Video: Installing Constraint Detection Add-on
----------------------------------------------
 
 
 

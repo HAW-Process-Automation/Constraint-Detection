@@ -19,8 +19,8 @@ The thresholds were set to their default values 50% and 10%. No short capsules o
    
    Figure 2: UI for use case 1
 
-After the Add-on has finished the analysis, the table in the user interface is populated with the Top 30 of the most constrained/saturated signals in descending order. The table gives you a signal name and path, so that signals with high 
-indices can be found easier in the treemap in the workbench. In addition, the table can be sorted by every column which gives you the option to target specific signal types or plant sections.
+After the Add-on has finished the analysis, the table in the user interface is populated with the Top 30 of the most constrained/saturated signals in descending order. The table gives you a signal name and path, so that signals with a 
+high 'Constrained/Saturated Time %' can be found easier in the treemap in the workbench. In addition, the table can be sorted by every column which gives you the option to target specific signal types or plant sections.
 
 .. figure:: /images/table_use_case_1.png
    
@@ -30,7 +30,7 @@ The new "Plant Constraint Detection Results" asset tree can be found in the Data
 
 	* Analysed Signal
 	* Constraint/Saturation Signal
-	* Constraint/Saturation Index
+	* Constrained/Saturated Time Percentage
 	* Medium Constraint/Saturation Condition
 	* High Constraint/Saturation Condition
 
@@ -40,8 +40,8 @@ Based on the new signals and conditions, further analysis can be executed using 
    
    Figure 4: Signals and conditions in the "Plant Constraint Detection Results" asset tree for use case 1
 
-In the workbench, a new worksheet called "Constraint Detection Treemap View" has appeared. The treemap is coloured according to the thresholds which were set previously in the user interface. The thresholds give you the possibility to
-prioritize control loops and to visualize your priorities. The constraint/saturation index was selected as a statistic to be displayed in the treemap to facilitate the interpretation of the analysis results.
+In the workbench, three new worksheets called "OP Saturation Detection Treemap", "PV Constraint Detection Treemap" and "SP Constraint Detection Treemap" have appeared. The treemap is coloured according to the thresholds which were set 
+previously in the user interface. The 'Constrained/Saturated Time %' was selected as a statistic to be displayed in the treemap to facilitate the interpretation of the analysis results.
 
 .. figure:: /images/treemap_use_case_1.png
    
@@ -59,16 +59,15 @@ identified.
 Use Case 2: Identifying Bad Actors
 ----------------------------------
 For the second use case, the asset tree from use case 1 was used again to identify bad actors. For this purpose, the thresholds for the treemap were adjusted. The red threshold and the yellow threshold were both set to 80%. 
-Therefore, only red and green panels will appear in the treemap which makes it easier to find signals with a very a high constraint/saturation index. This use case shows how the threshold settings in the user interface can be used to
-get a treemap visualization which is tailored to the user's requirements.
+Therefore, only red and green panels will appear in the treemap which makes it easier to find signals with a very a high 'Constrained/Saturated Time %'. This use case shows how the threshold settings in the user interface can be used 
+to get a treemap visualization which is tailored to the user's requirements.
 
 .. figure:: /images/user_interface_use_case_2.png
-   :scale: 110%
 
    Figure 7: UI for use case 2
 
-The analysis was performed over period of one week and the new asset tree was named 'Plant Bad Actors'. Figure 7 shows how the signal table got populated after the analysis was finished. In addition, the 'Export table to CSV' button got
-enabled so that the table can be downloaded. In the treemap, the controller outputs with very high saturation indices stand out and are easy to find, as can be seen below for controller 44 in Section A >> Unit 3.
+The analysis was performed over a period of one week and the new asset tree was named 'Plant Bad Actors'. In the treemap, the controller outputs with a very high 'Saturated Time %' stand out and are easy to find, as can be seen below for 
+controller 44 in Section A >> Unit 3.
 
 .. figure:: /images/treemap_use_case_2.png
    
@@ -79,6 +78,10 @@ If a bad actor is identified, the trend view for the corresponding controller ca
 .. figure:: /images/trend_view_use_case_2.png
    
    Figure 9: Trendview for use case 2
+
+.. note::
+   Constraints and saturation in control signals are not always problematic because they can be an intended way of operation. For example, if controller output saturation is intended, then a signal with a high 'Saturated Time %' would 
+   not be a bad actor but a good actor. See :ref:`Causes for Constraints and Saturation` for more information.
 
 
 

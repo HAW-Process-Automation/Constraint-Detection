@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Backend &mdash; seeq-constraintdetection 0.1 documentation</title>
+  <title>Backend &mdash; seeq-constraintdetection 0.0.1 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="_static/seeq-favicon.ico"/>
@@ -31,6 +31,9 @@
             <a href="index.html" class="icon icon-home"> seeq-constraintdetection
             <img src="_static/Seeq_logo_darkBlue_sm.png" class="logo" alt="Logo"/>
           </a>
+              <div class="version">
+                0.0.1
+              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -146,6 +149,49 @@ Conditions</p></li>
 <li><p><strong>short_capsule</strong> (<em>str</em>) – String that contains the length and unit of the short capsules e.g. ‘2min’</p></li>
 </ul>
 </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="seeq.addons.constraintdetection._saturation_detection.recalculate_constraint_index_table">
+<span class="sig-prename descclassname"><span class="pre">seeq.addons.constraintdetection._saturation_detection.</span></span><span class="sig-name descname"><span class="pre">recalculate_constraint_index_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">saturation_index_df</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeq/addons/constraintdetection/_saturation_detection.html#recalculate_constraint_index_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeq.addons.constraintdetection._saturation_detection.recalculate_constraint_index_table" title="Permalink to this definition"></a></dt>
+<dd><p>This function is called when the recalculate button is clicked. The function generates a dictionary with signal
+name, signal path and constraint index data which is handed over to v.DataTable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>saturation_index_df</strong> (<em>pd.DataFrame</em>) – The dataframe that contains the unformatted signal names and constrained time percentage</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>saturation_index_dict</strong> – The dictionary that contains the signal names, signal paths and constrained time percentage</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dictionary</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="seeq.addons.constraintdetection._saturation_detection.recalculate_saturation_index">
+<span class="sig-prename descclassname"><span class="pre">seeq.addons.constraintdetection._saturation_detection.</span></span><span class="sig-name descname"><span class="pre">recalculate_saturation_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pulled_signals_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">short_capsule_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">short_capsule_unit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">short_gap_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">short_gap_unit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeq/addons/constraintdetection/_saturation_detection.html#recalculate_saturation_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeq.addons.constraintdetection._saturation_detection.recalculate_saturation_index" title="Permalink to this definition"></a></dt>
+<dd><p>This function is called when the recalculate button is clicked. The function calculates the constrained time
+percentage from the constraint/saturation signals and generates a dataframe that contains the columns
+‘Signal Name and Path’, ‘Signal’, ‘Path’ and ‘Index’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pulled_signals_df</strong> (<em>pd.DataFrame</em>) – The dataframe that contains the saturation/constraint signals</p></li>
+<li><p><strong>short_capsule_number</strong> (<em>int</em>) – Integer which specifies the length of the capsules that should be closed in the High/Medium Contraint Conditions</p></li>
+<li><p><strong>short_capsule_unit</strong> (<em>str</em>) – Unit (seconds. minutes, hours) of the short capsules</p></li>
+<li><p><strong>short_gap_number</strong> (<em>int</em>) – Integer which specifies the length of the gaps that should be closed in the High/Medium Contraint Conditions</p></li>
+<li><p><strong>short_gap_unit</strong> (<em>str</em>) – Unit (seconds. minutes, hours) of the short gaps</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>saturation_index_df</strong> – The dictionary that contains the signal names, signal paths and constrained time percentage</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
 </dd>
 </dl>
 </dd></dl>
@@ -282,6 +328,33 @@ signals with formatted signal names</p></li>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><strong>push_results</strong> – The dataframe with the push results.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="seeq.addons.constraintdetection._SPy_functions.recalculate_change_short_gap_capsule">
+<span class="sig-prename descclassname"><span class="pre">seeq.addons.constraintdetection._SPy_functions.</span></span><span class="sig-name descname"><span class="pre">recalculate_change_short_gap_capsule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asset_tree_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">original_asset_tree_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workbook_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">short_gap</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">short_capsule</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeq/addons/constraintdetection/_SPy_functions.html#recalculate_change_short_gap_capsule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeq.addons.constraintdetection._SPy_functions.recalculate_change_short_gap_capsule" title="Permalink to this definition"></a></dt>
+<dd><p>This function recalculates the formula for the High/Medium Constraint Condition and the Constrained/Saturated Time
+Percentage. It pulls all saturation/constraint signals from the new asset tree, so that the Constrained/Saturated
+Time Percentage for the table in the UI can be recalculated as well.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>asset_tree_name</strong> (<em>str</em>) – User specified name for the new asset tree</p></li>
+<li><p><strong>original_asset_tree_name</strong> (<em>str</em>) – Selected asset tree for the analysis</p></li>
+<li><p><strong>start_time</strong> (<em>str</em>) – The start time for the analysis</p></li>
+<li><p><strong>end_time</strong> (<em>str</em>) – The end time for the analysis</p></li>
+<li><p><strong>workbook_id</strong> (<em>str</em>) – The ID of the workbook</p></li>
+<li><p><strong>short_gap</strong> (<em>str</em>) – String that specifies short gaps which should be closed in the High/Medium Constraint Condition</p></li>
+<li><p><strong>short_capsule</strong> (<em>str</em>) – String that specifies short capsules which should be ignored in the High/Medium Constraint Condition</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>pulled_signals_df</strong> – A dataframe with all saturation/constraint signals in the new asset tree</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>pd.DataFrame</p>

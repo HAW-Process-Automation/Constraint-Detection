@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>seeq.addons.constraintdetection._SPy_functions &mdash; seeq-constraintdetection 0.1 documentation</title>
+  <title>seeq.addons.constraintdetection._SPy_functions &mdash; seeq-constraintdetection 0.0.1 documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../../../_static/seeq-favicon.ico"/>
@@ -28,6 +28,9 @@
             <a href="../../../../index.html" class="icon icon-home"> seeq-constraintdetection
             <img src="../../../../_static/Seeq_logo_darkBlue_sm.png" class="logo" alt="Logo"/>
           </a>
+              <div class="version">
+                0.0.1
+              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -75,11 +78,28 @@
 <span></span><span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">contextmanager</span>
 
 <span class="kn">from</span> <span class="nn">seeq</span> <span class="kn">import</span> <span class="n">spy</span>
+<span class="kn">from</span> <span class="nn">seeq</span> <span class="kn">import</span> <span class="n">sdk</span>
 <span class="kn">from</span> <span class="nn">seeq.spy.assets</span> <span class="kn">import</span> <span class="n">Asset</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
-<span class="kn">from</span> <span class="nn">seeq</span> <span class="kn">import</span> <span class="n">sdk</span>
+
 <span class="kn">import</span> <span class="nn">pytz</span>
 <span class="kn">import</span> <span class="nn">json</span>
+
+
+<span class="k">def</span> <span class="nf">get_asset_trees_from_workbook_id</span><span class="p">(</span><span class="n">workbook_id</span><span class="p">):</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="n">spy</span><span class="o">.</span><span class="n">search</span><span class="p">({</span>
+        <span class="s1">&#39;Type&#39;</span><span class="p">:</span> <span class="s1">&#39;Signal&#39;</span>
+    <span class="p">},</span> <span class="n">workbook</span><span class="o">=</span><span class="n">workbook_id</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="n">items</span><span class="p">[</span><span class="n">items</span><span class="p">[</span><span class="s1">&#39;Path&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">notnull</span><span class="p">()]</span>
+    <span class="n">items</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">asset_tree_name_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="o">.</span><span class="n">index</span><span class="p">)):</span>
+        <span class="n">split_index</span> <span class="o">=</span> <span class="n">items</span><span class="p">[</span><span class="s1">&#39;Path&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &gt;&gt; &quot;</span><span class="p">)</span>
+        <span class="n">asset_tree_name</span> <span class="o">=</span> <span class="n">split_index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">asset_tree_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">asset_tree_name_list</span><span class="p">:</span>
+            <span class="n">asset_tree_name_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">asset_tree_name</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">asset_tree_name_list</span>
 
 
 <div class="viewcode-block" id="get_start_end_display_range"><a class="viewcode-back" href="../../../../backend_calculations.html#seeq.addons.constraintdetection._SPy_functions.get_start_end_display_range">[docs]</a><span class="k">def</span> <span class="nf">get_start_end_display_range</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
@@ -261,7 +281,7 @@
     <span class="n">time_capsule</span> <span class="o">=</span> <span class="s1">&#39;$condition = condition(capsule(&quot;&#39;</span> <span class="o">+</span> <span class="n">start</span> <span class="o">+</span> <span class="s1">&#39;&quot;, &quot;&#39;</span> <span class="o">+</span> <span class="n">end</span> <span class="o">+</span> <span class="s1">&#39;&quot;))&#39;</span>
     <span class="n">medium_saturation_condition</span> <span class="o">=</span> <span class="s1">&#39;($sat==2).merge(&#39;</span> <span class="o">+</span> <span class="n">short_gap</span> <span class="o">+</span> <span class="s1">&#39;).removeShorterThan(&#39;</span> <span class="o">+</span> <span class="n">short_capsule</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span>
     <span class="n">high_saturation_condition</span> <span class="o">=</span> <span class="s1">&#39;($sat==3).merge(&#39;</span> <span class="o">+</span> <span class="n">short_gap</span> <span class="o">+</span> <span class="s1">&#39;).removeShorterThan(&#39;</span> <span class="o">+</span> <span class="n">short_capsule</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span>
-    <span class="n">saturation_index_condition</span> <span class="o">=</span> <span class="s1">&#39;$saturation = ($sat&gt;0).merge(&#39;</span><span class="o">+</span><span class="n">short_gap</span><span class="o">+</span><span class="s1">&#39;).removeShorterThan(&#39;</span><span class="o">+</span><span class="n">short_capsule</span><span class="o">+</span><span class="s1">&#39;)&#39;</span>
+    <span class="n">saturation_index_condition</span> <span class="o">=</span> <span class="s1">&#39;$saturation = ($sat&gt;0).merge(&#39;</span> <span class="o">+</span> <span class="n">short_gap</span> <span class="o">+</span> <span class="s1">&#39;).removeShorterThan(&#39;</span> <span class="o">+</span> <span class="n">short_capsule</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span>
 
     <span class="k">class</span> <span class="nc">Treemap_AssetStructure</span><span class="p">(</span><span class="n">Asset</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -388,7 +408,7 @@
             <span class="p">}</span>
 
         <span class="nd">@Asset</span><span class="o">.</span><span class="n">Attribute</span><span class="p">()</span>
-        <span class="k">def</span> <span class="nf">OP_Saturation_Index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">OP_Saturated_Time_Percentage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="p">):</span>
             <span class="k">return</span> <span class="p">{</span>
                 <span class="s1">&#39;Type&#39;</span><span class="p">:</span> <span class="s1">&#39;Signal&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;Formula&#39;</span><span class="p">:</span> <span class="n">time_capsule</span> <span class="o">+</span> <span class="n">saturation_index_condition</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;&#39;&#39;$saturation.aggregate(percentDuration(), </span>
@@ -399,7 +419,7 @@
             <span class="p">}</span>
 
         <span class="nd">@Asset</span><span class="o">.</span><span class="n">Attribute</span><span class="p">()</span>
-        <span class="k">def</span> <span class="nf">PV_Constraint_Index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">PV_Constrained_Time_Percentage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="p">):</span>
             <span class="k">return</span> <span class="p">{</span>
                 <span class="s1">&#39;Type&#39;</span><span class="p">:</span> <span class="s1">&#39;Signal&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;Formula&#39;</span><span class="p">:</span> <span class="n">time_capsule</span> <span class="o">+</span> <span class="n">saturation_index_condition</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;&#39;&#39;$saturation.aggregate(percentDuration(), </span>
@@ -410,7 +430,7 @@
             <span class="p">}</span>
 
         <span class="nd">@Asset</span><span class="o">.</span><span class="n">Attribute</span><span class="p">()</span>
-        <span class="k">def</span> <span class="nf">SP_Constraint_Index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">SP_Constrained_Time_Percentage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="p">):</span>
             <span class="k">return</span> <span class="p">{</span>
                 <span class="s1">&#39;Type&#39;</span><span class="p">:</span> <span class="s1">&#39;Signal&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;Formula&#39;</span><span class="p">:</span> <span class="n">time_capsule</span> <span class="o">+</span> <span class="n">saturation_index_condition</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;&#39;&#39;$saturation.aggregate(percentDuration(), </span>
@@ -421,7 +441,7 @@
             <span class="p">}</span>
 
         <span class="nd">@Asset</span><span class="o">.</span><span class="n">Attribute</span><span class="p">()</span>
-        <span class="k">def</span> <span class="nf">MV_Constraint_Index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">MV_Constrained_Time_Percentage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="p">):</span>
             <span class="k">return</span> <span class="p">{</span>
                 <span class="s1">&#39;Type&#39;</span><span class="p">:</span> <span class="s1">&#39;Signal&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;Formula&#39;</span><span class="p">:</span> <span class="n">time_capsule</span> <span class="o">+</span> <span class="n">saturation_index_condition</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;&#39;&#39;$saturation.aggregate(percentDuration(), </span>
@@ -433,23 +453,22 @@
 
         <span class="nd">@Asset</span><span class="o">.</span><span class="n">Display</span><span class="p">()</span>
         <span class="k">def</span> <span class="nf">Ambient_Conditions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="p">,</span> <span class="n">analysis</span><span class="p">):</span>
-            <span class="n">worksheet</span> <span class="o">=</span> <span class="n">analysis</span><span class="o">.</span><span class="n">worksheet</span><span class="p">(</span><span class="s1">&#39;Constraint Detection Treemap View&#39;</span><span class="p">)</span>
-
-            <span class="c1"># define a workstep with the display_items that we want on the trend.</span>
-            <span class="n">workstep</span> <span class="o">=</span> <span class="n">worksheet</span><span class="o">.</span><span class="n">workstep</span><span class="p">(</span><span class="s1">&#39;Alarm_Tree_Map&#39;</span><span class="p">)</span>
-            <span class="n">workstep</span><span class="o">.</span><span class="n">view</span> <span class="o">=</span> <span class="s1">&#39;Treemap&#39;</span>
-            <span class="n">workstep</span><span class="o">.</span><span class="n">display_range</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s1">&#39;Start&#39;</span><span class="p">:</span> <span class="n">start</span><span class="p">,</span>
-                <span class="s1">&#39;End&#39;</span><span class="p">:</span> <span class="n">end</span>
-            <span class="p">}</span>
 
             <span class="k">if</span> <span class="n">checkbox_op</span><span class="p">:</span>
+                <span class="n">worksheet</span> <span class="o">=</span> <span class="n">analysis</span><span class="o">.</span><span class="n">worksheet</span><span class="p">(</span><span class="s1">&#39;OP Saturation Detection Treemap&#39;</span><span class="p">)</span>
+                <span class="n">workstep</span> <span class="o">=</span> <span class="n">worksheet</span><span class="o">.</span><span class="n">workstep</span><span class="p">(</span><span class="s1">&#39;OP_Treemap&#39;</span><span class="p">)</span>
+                <span class="n">workstep</span><span class="o">.</span><span class="n">view</span> <span class="o">=</span> <span class="s1">&#39;Treemap&#39;</span>
+                <span class="n">workstep</span><span class="o">.</span><span class="n">display_range</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s1">&#39;Start&#39;</span><span class="p">:</span> <span class="n">start</span><span class="p">,</span>
+                    <span class="s1">&#39;End&#39;</span><span class="p">:</span> <span class="n">end</span>
+                <span class="p">}</span>
+
                 <span class="n">workstep</span><span class="o">.</span><span class="n">display_items</span> <span class="o">=</span> <span class="p">[{</span>
                     <span class="s1">&#39;Item&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">OP</span><span class="p">()</span>
                 <span class="p">},</span> <span class="p">{</span>
                     <span class="s1">&#39;Item&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">OP_Saturation_Signal</span><span class="p">()</span>
                 <span class="p">},</span> <span class="p">{</span>
-                    <span class="s1">&#39;Item&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">OP_Saturation_Index</span><span class="p">(),</span>
+                    <span class="s1">&#39;Item&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">OP_Saturated_Time_Percentage</span><span class="p">(),</span>
                     <span class="s1">&#39;Samples Display&#39;</span><span class="p">:</span> <span class="s1">&#39;Bars&#39;</span><span class="p">,</span>
                     <span class="s1">&#39;Line Width&#39;</span><span class="p">:</span> <span class="mi">20</span>
                 <span class="p">},</span> <span class="p">{</span>
@@ -460,14 +479,23 @@
                     <span class="s1">&#39;Color&#39;</span><span class="p">:</span> <span class="s1">&#39;#ffdd52&#39;</span>
                 <span class="p">}]</span>
 
-            <span class="k">elif</span> <span class="n">checkbox_pv</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">checkbox_pv</span><span class="p">:</span>
+                <span class="n">worksheet</span> <span class="o">=</span> <span class="n">analysis</span><span class="o">.</span><span class="n">worksheet</span><span class="p">(</span><span class="s1">&#39;PV Constraint Detection Treemap&#39;</span><span class="p">)</span>
+                <span class="n">workstep</span> <span class="o">=</span> <span class="n">worksheet</span><span class="o">.</span><span class="n">workstep</span><span class="p">(</span><span class="s1">&#39;PV_Treemap&#39;</span><span class="p">)</span>
+                <span class="n">workstep</span><span class="o">.</span><span class="n">view</span> <span class="o">=</span> <span class="s1">&#39;Treemap&#39;</span>
+                <span class="n">workstep</span><span class="o">.</span><span class="n">display_range</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s1">&#39;Start&#39;</span><span class="p">:</span> <span class="n">start</span><span class="p">,</span>
+                    <span class="s1">&#39;End&#39;</span><span class="p">:</span> <span class="n">end</span>
+                <span class="p">}</span>
+
                 <span class="n">workstep</span><span class="o">.</span><span class="n">display_items</span> <span class="o">=</span> <span class="p">[{</span>
                     <span class="s1">&#39;Item&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">PV</span><span class="p">()</span>
                 <span class="p">},</span> <span class="p">{</span>
                     <span class="s1">&#39;Item&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">PV_Constraint_Signal</span><span class="p">()</span>
                 <span class="p">},</span> <span class="p">{</span>
-                    <span class="s1">&#39;Item&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">PV_Constraint_Index</span><span class="p">(),</span>
-                    <span class="s1">&#39;Samples Display&#39;</span><span class="p">:</span> <span class="s1">&#39;Bars&#39;</span>
+                    <span class="s1">&#39;Item&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">PV_Constrained_Time_Percentage</span><span class="p">(),</span>
+                    <span class="s1">&#39;Samples Display&#39;</span><span class="p">:</span> <span class="s1">&#39;Bars&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;Line Width&#39;</span><span class="p">:</span> <span class="mi">20</span>
                 <span class="p">},</span> <span class="p">{</span>
                     <span class="s1">&#39;Item&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">High_PV_Constraint</span><span class="p">(),</span>
                     <span class="s1">&#39;Color&#39;</span><span class="p">:</span> <span class="s1">&#39;#ff0000&#39;</span>
@@ -476,14 +504,23 @@
                     <span class="s1">&#39;Color&#39;</span><span class="p">:</span> <span class="s1">&#39;#ffdd52&#39;</span>
                 <span class="p">}]</span>
 
-            <span class="k">elif</span> <span class="n">checkbox_sp</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">checkbox_sp</span><span class="p">:</span>
+                <span class="n">worksheet</span> <span class="o">=</span> <span class="n">analysis</span><span class="o">.</span><span class="n">worksheet</span><span class="p">(</span><span class="s1">&#39;SP Constraint Detection Treemap&#39;</span><span class="p">)</span>
+                <span class="n">workstep</span> <span class="o">=</span> <span class="n">worksheet</span><span class="o">.</span><span class="n">workstep</span><span class="p">(</span><span class="s1">&#39;SP_Treemap&#39;</span><span class="p">)</span>
+                <span class="n">workstep</span><span class="o">.</span><span class="n">view</span> <span class="o">=</span> <span class="s1">&#39;Treemap&#39;</span>
+                <span class="n">workstep</span><span class="o">.</span><span class="n">display_range</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s1">&#39;Start&#39;</span><span class="p">:</span> <span class="n">start</span><span class="p">,</span>
+                    <span class="s1">&#39;End&#39;</span><span class="p">:</span> <span class="n">end</span>
+                <span class="p">}</span>
+
                 <span class="n">workstep</span><span class="o">.</span><span class="n">display_items</span> <span class="o">=</span> <span class="p">[{</span>
                     <span class="s1">&#39;Item&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">SP</span><span class="p">()</span>
                 <span class="p">},</span> <span class="p">{</span>
                     <span class="s1">&#39;Item&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">SP_Constraint_Signal</span><span class="p">()</span>
                 <span class="p">},</span> <span class="p">{</span>
-                    <span class="s1">&#39;Item&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">SP_Constraint_Index</span><span class="p">(),</span>
-                    <span class="s1">&#39;Samples Display&#39;</span><span class="p">:</span> <span class="s1">&#39;Bars&#39;</span>
+                    <span class="s1">&#39;Item&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">SP_Constrained_Time_Percentage</span><span class="p">(),</span>
+                    <span class="s1">&#39;Samples Display&#39;</span><span class="p">:</span> <span class="s1">&#39;Bars&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;Line Width&#39;</span><span class="p">:</span> <span class="mi">20</span>
                 <span class="p">},</span> <span class="p">{</span>
                     <span class="s1">&#39;Item&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">High_SP_Constraint</span><span class="p">(),</span>
                     <span class="s1">&#39;Color&#39;</span><span class="p">:</span> <span class="s1">&#39;#ff0000&#39;</span>
@@ -492,19 +529,28 @@
                     <span class="s1">&#39;Color&#39;</span><span class="p">:</span> <span class="s1">&#39;#ffdd52&#39;</span>
                 <span class="p">}]</span>
 
-            <span class="k">elif</span> <span class="n">checkbox_mv</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">checkbox_mv</span><span class="p">:</span>
+                <span class="n">worksheet</span> <span class="o">=</span> <span class="n">analysis</span><span class="o">.</span><span class="n">worksheet</span><span class="p">(</span><span class="s1">&#39;MV Constraint Detection Treemap&#39;</span><span class="p">)</span>
+                <span class="n">workstep</span> <span class="o">=</span> <span class="n">worksheet</span><span class="o">.</span><span class="n">workstep</span><span class="p">(</span><span class="s1">&#39;MV_Treemap&#39;</span><span class="p">)</span>
+                <span class="n">workstep</span><span class="o">.</span><span class="n">view</span> <span class="o">=</span> <span class="s1">&#39;Treemap&#39;</span>
+                <span class="n">workstep</span><span class="o">.</span><span class="n">display_range</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s1">&#39;Start&#39;</span><span class="p">:</span> <span class="n">start</span><span class="p">,</span>
+                    <span class="s1">&#39;End&#39;</span><span class="p">:</span> <span class="n">end</span>
+                <span class="p">}</span>
+
                 <span class="n">workstep</span><span class="o">.</span><span class="n">display_items</span> <span class="o">=</span> <span class="p">[{</span>
-                    <span class="s1">&#39;Item&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">SP</span><span class="p">()</span>
+                    <span class="s1">&#39;Item&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">MV</span><span class="p">()</span>
                 <span class="p">},</span> <span class="p">{</span>
-                    <span class="s1">&#39;Item&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">SP_Constraint_Signal</span><span class="p">()</span>
+                    <span class="s1">&#39;Item&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">MV_Constraint_Signal</span><span class="p">()</span>
                 <span class="p">},</span> <span class="p">{</span>
-                    <span class="s1">&#39;Item&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">SP_Constraint_Index</span><span class="p">(),</span>
-                    <span class="s1">&#39;Samples Display&#39;</span><span class="p">:</span> <span class="s1">&#39;Bars&#39;</span>
+                    <span class="s1">&#39;Item&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">MV_Constrained_Time_Percentage</span><span class="p">(),</span>
+                    <span class="s1">&#39;Samples Display&#39;</span><span class="p">:</span> <span class="s1">&#39;Bars&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;Line Width&#39;</span><span class="p">:</span> <span class="mi">20</span>
                 <span class="p">},</span> <span class="p">{</span>
-                    <span class="s1">&#39;Item&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">High_SP_Constraint</span><span class="p">(),</span>
+                    <span class="s1">&#39;Item&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">High_MV_Constraint</span><span class="p">(),</span>
                     <span class="s1">&#39;Color&#39;</span><span class="p">:</span> <span class="s1">&#39;#ff0000&#39;</span>
                 <span class="p">},</span> <span class="p">{</span>
-                    <span class="s1">&#39;Item&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Medium_SP_Constraint</span><span class="p">(),</span>
+                    <span class="s1">&#39;Item&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Medium_MV_Constraint</span><span class="p">(),</span>
                     <span class="s1">&#39;Color&#39;</span><span class="p">:</span> <span class="s1">&#39;#ffdd52&#39;</span>
                 <span class="p">}]</span>
             <span class="k">return</span> <span class="n">workstep</span>
@@ -538,6 +584,78 @@
     <span class="c1"># A copy asset tree was generated to not clutter the original asset tree with random signals and conditions</span>
     <span class="k">with</span> <span class="n">patching</span><span class="p">():</span>
         <span class="n">spy</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="n">metadata</span><span class="o">=</span><span class="n">build_df</span><span class="p">,</span> <span class="n">workbook</span><span class="o">=</span><span class="n">workbook_id</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="recalculate_change_short_gap_capsule"><a class="viewcode-back" href="../../../../backend_calculations.html#seeq.addons.constraintdetection._SPy_functions.recalculate_change_short_gap_capsule">[docs]</a><span class="k">def</span> <span class="nf">recalculate_change_short_gap_capsule</span><span class="p">(</span><span class="n">asset_tree_name</span><span class="p">,</span> <span class="n">original_asset_tree_name</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span> <span class="n">workbook_id</span><span class="p">,</span>
+                                         <span class="n">short_gap</span><span class="p">,</span> <span class="n">short_capsule</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function recalculates the formula for the High/Medium Constraint Condition and the Constrained/Saturated Time</span>
+<span class="sd">    Percentage. It pulls all saturation/constraint signals from the new asset tree, so that the Constrained/Saturated</span>
+<span class="sd">    Time Percentage for the table in the UI can be recalculated as well.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    asset_tree_name: str</span>
+<span class="sd">        User specified name for the new asset tree</span>
+<span class="sd">    original_asset_tree_name: str</span>
+<span class="sd">        Selected asset tree for the analysis</span>
+<span class="sd">    start_time: str</span>
+<span class="sd">        The start time for the analysis</span>
+<span class="sd">    end_time: str</span>
+<span class="sd">        The end time for the analysis</span>
+<span class="sd">    workbook_id: str</span>
+<span class="sd">        The ID of the workbook</span>
+<span class="sd">    short_gap: str</span>
+<span class="sd">        String that specifies short gaps which should be closed in the High/Medium Constraint Condition</span>
+<span class="sd">    short_capsule: str</span>
+<span class="sd">        String that specifies short capsules which should be ignored in the High/Medium Constraint Condition</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    pulled_signals_df: pd.DataFrame</span>
+<span class="sd">        A dataframe with all saturation/constraint signals in the new asset tree</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">asset_tree_name</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="n">asset_tree_name</span> <span class="o">=</span> <span class="n">original_asset_tree_name</span> <span class="o">+</span> <span class="s1">&#39; Constraint Monitor&#39;</span>
+
+    <span class="n">saturation_signal_df</span> <span class="o">=</span> <span class="n">spy</span><span class="o">.</span><span class="n">search</span><span class="p">({</span>
+        <span class="s1">&#39;Path&#39;</span><span class="p">:</span> <span class="n">asset_tree_name</span><span class="p">,</span>
+        <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="s1">&#39;Signal&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Type&#39;</span><span class="p">:</span> <span class="s1">&#39;Signal&#39;</span>
+    <span class="p">},</span> <span class="n">workbook</span><span class="o">=</span><span class="n">workbook_id</span><span class="p">,</span> <span class="n">all_properties</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">pulled_signals_df</span> <span class="o">=</span> <span class="n">spy</span><span class="o">.</span><span class="n">pull</span><span class="p">(</span><span class="n">saturation_signal_df</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">start_time</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end_time</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="s1">&#39;30 s&#39;</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">index_df</span> <span class="o">=</span> <span class="n">spy</span><span class="o">.</span><span class="n">search</span><span class="p">({</span>
+        <span class="s1">&#39;Path&#39;</span><span class="p">:</span> <span class="n">asset_tree_name</span><span class="p">,</span>
+        <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="s1">&#39;Time Percentage&#39;</span>
+    <span class="p">},</span> <span class="n">workbook</span><span class="o">=</span><span class="n">workbook_id</span><span class="p">,</span> <span class="n">all_properties</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">start</span> <span class="o">=</span> <span class="n">pulled_signals_df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="n">pulled_signals_df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+
+    <span class="n">time_capsule</span> <span class="o">=</span> <span class="s1">&#39;$condition = condition(capsule(&quot;&#39;</span> <span class="o">+</span> <span class="n">start</span> <span class="o">+</span> <span class="s1">&#39;&quot;, &quot;&#39;</span> <span class="o">+</span> <span class="n">end</span> <span class="o">+</span> <span class="s1">&#39;&quot;))&#39;</span>
+    <span class="n">saturation_index_condition</span> <span class="o">=</span> <span class="s1">&#39;$saturation = ($sat&gt;0).merge(&#39;</span><span class="o">+</span><span class="n">short_gap</span><span class="o">+</span><span class="s1">&#39;).removeShorterThan(&#39;</span><span class="o">+</span><span class="n">short_capsule</span><span class="o">+</span><span class="s1">&#39;)&#39;</span>
+    <span class="n">index_formula</span> <span class="o">=</span> <span class="n">time_capsule</span> <span class="o">+</span> <span class="n">saturation_index_condition</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;&#39;&#39;$saturation.aggregate(percentDuration(), </span>
+<span class="s1">    $condition, middleKey(), 0s)&#39;&#39;&#39;</span>
+    <span class="n">index_df</span><span class="p">[</span><span class="s1">&#39;Formula&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">index_formula</span>
+
+    <span class="n">conditions_df</span> <span class="o">=</span> <span class="n">spy</span><span class="o">.</span><span class="n">search</span><span class="p">({</span>
+        <span class="s1">&#39;Path&#39;</span><span class="p">:</span> <span class="n">asset_tree_name</span><span class="p">,</span>
+        <span class="s1">&#39;Type&#39;</span><span class="p">:</span> <span class="s1">&#39;Condition&#39;</span>
+    <span class="p">},</span> <span class="n">workbook</span><span class="o">=</span><span class="n">workbook_id</span><span class="p">,</span> <span class="n">all_properties</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">conditions_df</span><span class="o">.</span><span class="n">index</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="s1">&#39;High&#39;</span> <span class="ow">in</span> <span class="n">conditions_df</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">conditions_df</span><span class="p">[</span><span class="s1">&#39;Formula&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;($sat==3).merge(&#39;</span> <span class="o">+</span> <span class="n">short_gap</span> <span class="o">+</span> <span class="s1">&#39;).removeShorterThan(&#39;</span> <span class="o">+</span> <span class="n">short_capsule</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span>
+        <span class="k">elif</span> <span class="s1">&#39;Medium&#39;</span> <span class="ow">in</span> <span class="n">conditions_df</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">conditions_df</span><span class="p">[</span><span class="s1">&#39;Formula&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;(($sat==2).intersect($sat.derivative()==0)).merge(&#39;</span> <span class="o">+</span> <span class="n">short_gap</span> <span class="o">+</span> \
+                                          <span class="s1">&#39;).removeShorterThan(&#39;</span> <span class="o">+</span> <span class="n">short_capsule</span> <span class="o">+</span> <span class="s1">&#39;) &#39;</span>
+
+    <span class="n">spy</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="n">metadata</span><span class="o">=</span><span class="n">conditions_df</span><span class="p">,</span> <span class="n">workbook</span><span class="o">=</span><span class="n">workbook_id</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">spy</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="n">metadata</span><span class="o">=</span><span class="n">index_df</span><span class="p">,</span> <span class="n">workbook</span><span class="o">=</span><span class="n">workbook_id</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">pulled_signals_df</span></div>
 </pre></div>
 
            </div>
