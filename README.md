@@ -13,7 +13,7 @@ Add-on analyses the OP, SP, PV and MV and and generates a worksheet in treemap v
 # User Guide
 [**seeq-constraintdetection** User Guide](https://haw-process-automation.github.io/Constraint-Detection/userguide.html) provides an explanation of the required asset tree structure and the workflow in the UI. The video below shows how to use the Add-on to perform a plant-wide analysis of control loop data.
 
-[![User Guide Video](https://github.com/HAW-Process-Automation/Constraint-Detection/blob/main/docs_src/images/introduction_treemap.PNG)](https://github.com/HAW-Process-Automation/Constraint-Detection/blob/main/docs_src/_static/constraint_detection_add-on_userguide.mp4)
+https://user-images.githubusercontent.com/111488243/190983948-add63116-8300-4fbc-9184-5701a1c1d74c.mp4
 
 # Installation
 The backend of **seeq-constraintdetection** requires **Python 3.7** or later.
