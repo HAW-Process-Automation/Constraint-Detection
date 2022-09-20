@@ -7,7 +7,7 @@ Overview
 **seeq-constraintdetection** is an Add-on for control loop performance monitoring which is used for detecting constraints and saturation in control loop signals. A control loop consists of multiple components which are namely 
 the controller, the actuator, the process, and the sensor. 
 
-.. figure:: _static/control_loop_with_constraints.png
+.. figure:: _static/control_loop_with_constraints.PNG
    
    Figure 1: Control loop with constraints
 
@@ -16,7 +16,7 @@ constraints due to different underlying reasons. The actuator and the sensor can
 when the actuator reaches a constraint. The setpoint can meet constraints if certain control structures such as constrained model predictive control (MPC) or constrained cascade control are used. When a control signal reaches a 
 constraint, the time trend sticks to the signal minimum or maximum and only deviates from there for short time periods.
 
-.. figure:: _static/introduction_time_trend.png
+.. figure:: _static/introduction_time_trend.PNG
    
    Figure 2: OP signal with saturation
 
@@ -25,7 +25,7 @@ user gets a plant-wide overview of constrained/saturated signals and can drill d
 calculated as the time-percentage a signal is constrained/saturated in the analysed time period. The Add-on provides an intuitive user interface in which the user can specify which time period and which control signals are of interest 
 for him/her. Furthermore, thresholds can be set for the coloured visualization of the 'Constrained Time %' or 'Saturated Time %' in the treemap.
 
-.. figure:: _static/introduction_treemap.png
+.. figure:: _static/introduction_treemap.PNG
 
    Figure 3: Constraint detection results in treemap view
 
