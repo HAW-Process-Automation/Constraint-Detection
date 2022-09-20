@@ -8,7 +8,7 @@ a specific structure. Each control signal must be assigned to a controller and m
 signals are only "Controller Output", "Setpoint", "Process Variable", "Manipulated Variable" and "Mode". No specific naming is required for the higher-level controllers. The controller can be named "Controller 1" or "FIC 1" or 
 completely different. Template code for generating the required asset tree in Seeq Data Lab can be found `here <https://github.com/HAW-Process-Automation/Constraint-Detection/tree/main/Template%20Code%20for%20Asset%20Tree>`_.
 
-.. figure:: /images/template_asset_tree.png
+.. figure:: _static/template_asset_tree.png
 
    Figure 1: Example for an asset tree in the required structure
 
@@ -33,7 +33,7 @@ Workflow
 12. (Optional) Short capsules and gaps can still be defined after the first execution by specifying them in the expansion panel and clicking on the 'Recalculate' button. This will affect the time capsules in trend view and the calculated 'Constrained/Saturated Time %'. This step can be executed iteratively.
 13. Close the Add-on window.
 
-.. figure:: /images/user_interface_guide.png
+.. figure:: _static/user_interface_guide.png
 
    Figure 2: Worflow in the UI
 
