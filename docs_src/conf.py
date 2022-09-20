@@ -46,6 +46,6 @@ exclude_patterns = []
 import sphinx_rtd_theme
 
 html_theme = 'sphinx_rtd_theme'
-html_favicon = '_static/seeq-favicon.ico'
-html_logo = '_static/Seeq_logo_darkBlue_sm.png'
+html_favicon = '_static/images/seeq-favicon.ico'
+html_logo = '_static/images/Seeq_logo_darkBlue_sm.png'
 html_static_path = ['_static']
