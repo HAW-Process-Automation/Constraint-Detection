@@ -38,7 +38,7 @@ class HamburgerMenu(v.Menu):
 
         self.documentation_button = v.ListItem(value='help',
                                                ripple=True,
-                                               href='https://haw-process-automation.github.io/Constraint-Detection/',
+                                               href='https://constraint-detection.readthedocs.io/en/latest/index.html',
                                                target='_blank',
                                                children=[v.ListItemAction(class_='mr-2 ml-0',
                                                                           children=[v.Icon(color='#212529',
@@ -468,7 +468,7 @@ class ConstraintDetection:
         # trees which are scoped to the workbook is handed over to the dropdown menu.
         self.asset_tree_heading = v.Html(tag='h4', class_='text-left', children=['Select Asset Tree'])
         self.link_userguide = v.Btn(x_small=True, icon=True, target='_blank',
-                                    href='https://haw-process-automation.github.io/Constraint-Detection/userguide.html',
+                                    href='https://constraint-detection.readthedocs.io/en/latest/userguide.html',
                                     attributes={"download": True}, children=[
                 v.Icon(color='#00695C', children=['mdi-open-in-new'])])
         self.asset_tree_explanation = v.Html(tag='div', class_='text-left', children=[

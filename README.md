@@ -1,6 +1,6 @@
 [![N|Solid](https://github.com/LeaTiedemann/Constraint-Detection/blob/main/HAW_Seeq.png)](https://www.seeq.com)
 
-[![N|Scheme](https://github.com/LeaTiedemann/Constraint-Detection/blob/main/treemap_use_case_1.PNG)](https://haw-process-automation.github.io/Constraint-Detection/index.html)
+[![N|Scheme](https://github.com/LeaTiedemann/Constraint-Detection/blob/main/treemap_use_case_1.PNG)](https://constraint-detection.readthedocs.io/en/latest/index.html)
 
 **seeq-constraintdetection** is an Add-on for control loop performance monitoring. It is used to find time periods when a control signal is constrained or saturated. This means that the signal is at its minimum or maximum and only 
 deviates from there for short time periods. Control signals include all signals which are related to a control loop: Controller output (OP), setpoint (SP), process variable (PV), manipulated variable (MV) and auto-manual mode. 
@@ -8,12 +8,14 @@ Saturation occurs in the OP whereas constraints occur in the PV and MV due to th
 Add-on analyses the OP, SP, PV and MV and and generates a worksheet in treemap view where every controller panel is coloured according to the time-percentage a signal is constrained/saturated in the analysis time period.
 
 # Documentation
-[Documentation for **seeq-constraintdetection**](https://haw-process-automation.github.io/Constraint-Detection/index.html)
+[Documentation for **seeq-constraintdetection**](https://constraint-detection.readthedocs.io/en/latest/index.html)
 
 # User Guide
-[**seeq-constraintdetection** User Guide](https://haw-process-automation.github.io/Constraint-Detection/userguide.html) provides an explanation of the required asset tree structure and the workflow in the user interface. The video below shows how to use the Add-on to perform a plant-wide analysis of control loop data.
+[**seeq-constraintdetection** User Guide](https://constraint-detection.readthedocs.io/en/latest/userguide.html) provides an explanation of the required asset tree structure and the workflow in the user interface. The video below shows how to use the Add-on to perform a plant-wide analysis of control loop data.
 
 https://user-images.githubusercontent.com/111488243/190984559-b1b7d7b1-7782-437c-8ed6-e4f5cb3d411e.mp4
+
+[Video in higher quality](https://constraint-detection.readthedocs.io/en/latest/userguide.html#video-user-guide)
 
 # Installation
 The backend of **seeq-constraintdetection** requires **Python 3.7** or later.
