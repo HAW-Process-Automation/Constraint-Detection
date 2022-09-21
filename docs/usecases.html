@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Use Cases &mdash; seeq-constraintdetection 0.0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/seeq-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Code Documentation" href="codedocumentation.html" />
+    <link rel="prev" title="User Guide" href="userguide.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> seeq-constraintdetection
+            <img src="_static/Seeq_logo_darkBlue_sm.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userguide.html">User Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Use Cases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#use-case-1-plant-wide-analysis-of-control-loop-data">Use Case 1: Plant-Wide Analysis of Control Loop Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#use-case-2-identifying-bad-actors">Use Case 2: Identifying Bad Actors</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="codedocumentation.html">Code Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="citation.html">Citation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">seeq-constraintdetection</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Use Cases</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/usecases.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="use-cases">
+<h1>Use Cases<a class="headerlink" href="#use-cases" title="Permalink to this headline"></a></h1>
+<section id="use-case-1-plant-wide-analysis-of-control-loop-data">
+<h2>Use Case 1: Plant-Wide Analysis of Control Loop Data<a class="headerlink" href="#use-case-1-plant-wide-analysis-of-control-loop-data" title="Permalink to this headline"></a></h2>
+<p>The <strong>Constraint Detection Add-on</strong> is suited for plant-wide analysis of control loop data. In this example, an asset tree with 111 controllers was analysed. Every controller has 4 signals assigned to it (Controller Output,
+Process Variable, Setpoint and Mode) which results in a total of 444 signals. The plant is divided into 2 sections where both sections have 6 units each. The structure of the asset tree and the number of controllers per unit is shown
+below.</p>
+<figure class="align-default" id="id1">
+<a class="reference internal image-reference" href="_images/asset_structure_use_case_1.png"><img alt="_images/asset_structure_use_case_1.png" src="_images/asset_structure_use_case_1.png" style="width: 551.2px; height: 488.8px;" /></a>
+<figcaption>
+<p><span class="caption-text">Figure 1: Structure of the asset tree for use case 1</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>The asset tree was analysed over a period of one week and the Add-on looked for constraints/saturation in all controller outputs, process variables and setpoints. The copy of the asset tree was named “Plant Constraint Detection Results”.
+The thresholds were set to their default values 50% and 10%. No short capsules or gaps were specified.</p>
+<figure class="align-default" id="id2">
+<img alt="_images/user_interface_use_case_1.png" src="_images/user_interface_use_case_1.png" />
+<figcaption>
+<p><span class="caption-text">Figure 2: UI for use case 1</span><a class="headerlink" href="#id2" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>After the Add-on has finished the analysis, the table in the user interface is populated with the Top 30 of the most constrained/saturated signals in descending order. The table gives you a signal name and path, so that signals with a
+high ‘Constrained/Saturated Time %’ can be found easier in the treemap in the workbench. In addition, the table can be sorted by every column which gives you the option to target specific signal types or plant sections.</p>
+<figure class="align-default" id="id3">
+<img alt="_images/table_use_case_1.png" src="_images/table_use_case_1.png" />
+<figcaption>
+<p><span class="caption-text">Figure 3: Index table for use case 1</span><a class="headerlink" href="#id3" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>The new “Plant Constraint Detection Results” asset tree can be found in the Data panel in the workbench. For every analysed signal, there are now 2 additional signals and 2 additional conditions:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Analysed Signal</p></li>
+<li><p>Constraint/Saturation Signal</p></li>
+<li><p>Constrained/Saturated Time Percentage</p></li>
+<li><p>Medium Constraint/Saturation Condition</p></li>
+<li><p>High Constraint/Saturation Condition</p></li>
+</ul>
+</div></blockquote>
+<p>Based on the new signals and conditions, further analysis can be executed using the tools in the workbench.</p>
+<figure class="align-default" id="id4">
+<img alt="_images/asset_tree_use_case_1.png" src="_images/asset_tree_use_case_1.png" />
+<figcaption>
+<p><span class="caption-text">Figure 4: Signals and conditions in the “Plant Constraint Detection Results” asset tree for use case 1</span><a class="headerlink" href="#id4" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>In the workbench, three new worksheets called “OP Saturation Detection Treemap”, “PV Constraint Detection Treemap” and “SP Constraint Detection Treemap” have appeared. The treemap is coloured according to the thresholds which were set
+previously in the user interface. The ‘Constrained/Saturated Time %’ was selected as a statistic to be displayed in the treemap to facilitate the interpretation of the analysis results.</p>
+<figure class="align-default" id="id5">
+<img alt="_images/treemap_use_case_1.png" src="_images/treemap_use_case_1.png" />
+<figcaption>
+<p><span class="caption-text">Figure 5: OP treemap for use case 1</span><a class="headerlink" href="#id5" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>From the treemap, it is easy to get to the trend view by clicking on a controller panel. In trend view, the constrained/saturated periods can be investigated in more detail and underlying causes for constraints/saturation can be
+identified.</p>
+<figure class="align-default" id="id6">
+<img alt="_images/trend_view_use_case_1.png" src="_images/trend_view_use_case_1.png" />
+<figcaption>
+<p><span class="caption-text">Figure 6: Trendview for use case 1</span><a class="headerlink" href="#id6" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="use-case-2-identifying-bad-actors">
+<h2>Use Case 2: Identifying Bad Actors<a class="headerlink" href="#use-case-2-identifying-bad-actors" title="Permalink to this headline"></a></h2>
+<p>For the second use case, the asset tree from use case 1 was used again to identify bad actors. For this purpose, the thresholds for the treemap were adjusted. The red threshold and the yellow threshold were both set to 80%.
+Therefore, only red and green panels will appear in the treemap which makes it easier to find signals with a very a high ‘Constrained/Saturated Time %’. This use case shows how the threshold settings in the user interface can be used
+to get a treemap visualization which is tailored to the user’s requirements.</p>
+<figure class="align-default" id="id7">
+<img alt="_images/user_interface_use_case_2.png" src="_images/user_interface_use_case_2.png" />
+<figcaption>
+<p><span class="caption-text">Figure 7: UI for use case 2</span><a class="headerlink" href="#id7" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>The analysis was performed over a period of one week and the new asset tree was named ‘Plant Bad Actors’. In the treemap, the controller outputs with a very high ‘Saturated Time %’ stand out and are easy to find, as can be seen below for
+controller 44 in Section A &gt;&gt; Unit 3.</p>
+<figure class="align-default" id="id8">
+<img alt="_images/treemap_use_case_2.png" src="_images/treemap_use_case_2.png" />
+<figcaption>
+<p><span class="caption-text">Figure 8: OP treemap for use case 2</span><a class="headerlink" href="#id8" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>If a bad actor is identified, the trend view for the corresponding controller can be investigated by clicking on the controller panel.</p>
+<figure class="align-default" id="id9">
+<img alt="_images/trend_view_use_case_2.png" src="_images/trend_view_use_case_2.png" />
+<figcaption>
+<p><span class="caption-text">Figure 9: Trendview for use case 2</span><a class="headerlink" href="#id9" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Constraints and saturation in control signals are not always problematic because they can be an intended way of operation. For example, if controller output saturation is intended, then a signal with a high ‘Saturated Time %’ would
+not be a bad actor but a good actor. See <a class="reference internal" href="userguide.html#causes-for-constraints-and-saturation"><span class="std std-ref">Causes for Constraints and Saturation</span></a> for more information.</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="userguide.html" class="btn btn-neutral float-left" title="User Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="codedocumentation.html" class="btn btn-neutral float-right" title="Code Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Seeq Corporation.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
