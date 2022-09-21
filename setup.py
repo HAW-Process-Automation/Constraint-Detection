@@ -30,14 +30,15 @@ setup_args = dict(
     description="Constraint and saturation detection in control loop data in Seeq",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/LeaTiedemann/seeq-constraintdetection",
+    url="https://github.com/HAW-Process-Automation/Constraint-Detection",
     packages=setuptools.find_namespace_packages(include=['seeq.*']),
     include_package_data=True,
     zip_safe=False,
     install_requires=[
         'ipyvuetify>=1.8.2',
         'numpy>=1.20.1',
-        'pandas>=1.2.4'
+        'pandas>=1.2.4',
+        'pytz~=2021.1'
     ],
     classifiers=[
         "Programming Language :: Python :: 3.7",
