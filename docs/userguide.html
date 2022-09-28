@@ -47,14 +47,16 @@
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">User Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#video-user-guide">Video: User Guide</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#asset-tree-for-constraint-detection-add-on">Asset Tree for Constraint Detection Add-on</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#workflow">Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#support">Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#causes-for-constraints-and-saturation">Causes for Constraints and Saturation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#video-user-guide">Video: User Guide</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="usecases.html">Use Cases</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codedocumentation.html">Code Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="citation.html">Citation</a></li>
 </ul>
@@ -85,6 +87,17 @@
              
   <section id="user-guide">
 <h1>User Guide<a class="headerlink" href="#user-guide" title="Permalink to this headline"></a></h1>
+<section id="video-user-guide">
+<h2>Video: User Guide<a class="headerlink" href="#video-user-guide" title="Permalink to this headline"></a></h2>
+
+    <video width="700"  controls >
+    <source src="_static/constraint_detection_add-on_userguide.mp4" type="video/mp4">
+    Video
+    </video>
+    <div class="line-block">
+<div class="line"><br /></div>
+</div>
+</section>
 <section id="asset-tree-for-constraint-detection-add-on">
 <h2>Asset Tree for Constraint Detection Add-on<a class="headerlink" href="#asset-tree-for-constraint-detection-add-on" title="Permalink to this headline"></a></h2>
 <p>The Constraint Detection Add-on analyses a complete asset structure of control signals. In order for the Add-on to recognize which signals belong to which controller and which signal type is involved, the asset tree must be available in
@@ -92,7 +105,7 @@ a specific structure. Each control signal must be assigned to a controller and m
 signals are only “Controller Output”, “Setpoint”, “Process Variable”, “Manipulated Variable” and “Mode”. No specific naming is required for the higher-level controllers. The controller can be named “Controller 1” or “FIC 1” or
 completely different. Template code for generating the required asset tree in Seeq Data Lab can be found <a class="reference external" href="https://github.com/HAW-Process-Automation/Constraint-Detection/tree/main/Template%20Code%20for%20Asset%20Tree">here</a>.</p>
 <figure class="align-default" id="id2">
-<img alt="_images/template_asset_tree.png" src="_images/template_asset_tree.png" />
+<img alt="_images/template_asset_tree.PNG" src="_images/template_asset_tree.PNG" />
 <figcaption>
 <p><span class="caption-text">Figure 1: Example for an asset tree in the required structure</span><a class="headerlink" href="#id2" title="Permalink to this image"></a></p>
 </figcaption>
@@ -124,9 +137,28 @@ completely different. Template code for generating the required asset tree in Se
 <li><p>Close the Add-on window.</p></li>
 </ol>
 <figure class="align-default" id="id3">
-<img alt="_images/user_interface_guide.png" src="_images/user_interface_guide.png" />
+<img alt="_images/user_interface_guide.PNG" src="_images/user_interface_guide.PNG" />
 <figcaption>
 <p><span class="caption-text">Figure 2: Worflow in the UI</span><a class="headerlink" href="#id3" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="support">
+<h2>Support<a class="headerlink" href="#support" title="Permalink to this headline"></a></h2>
+<p>If you are using the Constraint Detection Add-on and need support, you can click on the menu at the top right. There you will find the options ‘Support’ and ‘Documentation’.</p>
+<figure class="align-default" id="id4">
+<img alt="_images/userguide_support_1.PNG" src="_images/userguide_support_1.PNG" />
+<figcaption>
+<p><span class="caption-text">Figure 3: Hamburger menu in the UI</span><a class="headerlink" href="#id4" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>If you encounter an error while running the add-on or you need help with a special use case, click on ‘Support’. You will automatically be redirected to the <a class="reference external" href="https://github.com/HAW-Process-Automation/Constraint-Detection/issues">GitHub Issues</a> of the Constraint Detection Add-on and can open a new issue there.
+Support requests are handled by the Department of Automation of the Hamburg University of Applied Sciences in Germany. For general questions about the use of the add-on, you can click on ‘Documentation’. This will redirect you to this
+documentation.</p>
+<figure class="align-default" id="id5">
+<img alt="_images/userguide_support_2.PNG" src="_images/userguide_support_2.PNG" />
+<figcaption>
+<p><span class="caption-text">Figure 4: GitHub Issues</span><a class="headerlink" href="#id5" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </section>
@@ -157,14 +189,6 @@ completely different. Template code for generating the required asset tree in Se
 <li><p>Intended way of operation: For control valves, it is not unusual that a valve should be fully opened or fully closed. In this case, it is intended that the manipulated variable reaches a constraint.</p></li>
 </ul>
 </section>
-<section id="video-user-guide">
-<h2>Video: User Guide<a class="headerlink" href="#video-user-guide" title="Permalink to this headline"></a></h2>
-
-    <video width="700"  controls >
-    <source src="_static/constraint_detection_add-on_userguide.mp4" type="video/mp4">
-    Video
-    </video>
-    </section>
 </section>
 
 

@@ -45,14 +45,15 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#video-introduction-to-constraint-detection">Video: Introduction to Constraint Detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="userguide.html">User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usecases.html">Use Cases</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codedocumentation.html">Code Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="citation.html">Citation</a></li>
 </ul>
@@ -83,12 +84,23 @@
              
   <section id="introduction">
 <h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline"></a></h1>
+<section id="video-introduction-to-constraint-detection">
+<h2>Video: Introduction to Constraint Detection<a class="headerlink" href="#video-introduction-to-constraint-detection" title="Permalink to this headline"></a></h2>
+
+    <video width="700"  controls >
+    <source src="_static/constraint_detection_add-on_intro.mp4" type="video/mp4">
+    Video
+    </video>
+    <div class="line-block">
+<div class="line"><br /></div>
+</div>
+</section>
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline"></a></h2>
 <p><strong>seeq-constraintdetection</strong> is an Add-on for control loop performance monitoring which is used for detecting constraints and saturation in control loop signals. A control loop consists of multiple components which are namely
 the controller, the actuator, the process, and the sensor.</p>
 <figure class="align-default" id="id1">
-<img alt="_images/control_loop_with_constraints.png" src="_images/control_loop_with_constraints.png" />
+<img alt="_images/control_loop_with_constraints.PNG" src="_images/control_loop_with_constraints.PNG" />
 <figcaption>
 <p><span class="caption-text">Figure 1: Control loop with constraints</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
 </figcaption>
@@ -98,7 +110,7 @@ constraints due to different underlying reasons. The actuator and the sensor can
 when the actuator reaches a constraint. The setpoint can meet constraints if certain control structures such as constrained model predictive control (MPC) or constrained cascade control are used. When a control signal reaches a
 constraint, the time trend sticks to the signal minimum or maximum and only deviates from there for short time periods.</p>
 <figure class="align-default" id="id2">
-<img alt="_images/introduction_time_trend.png" src="_images/introduction_time_trend.png" />
+<img alt="_images/introduction_time_trend.PNG" src="_images/introduction_time_trend.PNG" />
 <figcaption>
 <p><span class="caption-text">Figure 2: OP signal with saturation</span><a class="headerlink" href="#id2" title="Permalink to this image"></a></p>
 </figcaption>
@@ -108,20 +120,12 @@ user gets a plant-wide overview of constrained/saturated signals and can drill d
 calculated as the time-percentage a signal is constrained/saturated in the analysed time period. The Add-on provides an intuitive user interface in which the user can specify which time period and which control signals are of interest
 for him/her. Furthermore, thresholds can be set for the coloured visualization of the ‘Constrained Time %’ or ‘Saturated Time %’ in the treemap.</p>
 <figure class="align-default" id="id3">
-<img alt="_images/introduction_treemap.png" src="_images/introduction_treemap.png" />
+<img alt="_images/introduction_treemap.PNG" src="_images/introduction_treemap.PNG" />
 <figcaption>
 <p><span class="caption-text">Figure 3: Constraint detection results in treemap view</span><a class="headerlink" href="#id3" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </section>
-<section id="video-introduction-to-constraint-detection">
-<h2>Video: Introduction to Constraint Detection<a class="headerlink" href="#video-introduction-to-constraint-detection" title="Permalink to this headline"></a></h2>
-
-    <video width="700"  controls >
-    <source src="_static/constraint_detection_add-on_intro.mp4" type="video/mp4">
-    Video
-    </video>
-    </section>
 </section>
 
 

@@ -1,6 +1,14 @@
 Introduction
 ============
 
+Video: Introduction to Constraint Detection
+-------------------------------------------
+
+.. video:: _static/constraint_detection_add-on_intro.mp4
+   :width: 700
+
+|
+
 Overview
 --------
 
@@ -29,9 +37,4 @@ for him/her. Furthermore, thresholds can be set for the coloured visualization o
 
    Figure 3: Constraint detection results in treemap view
 
-Video: Introduction to Constraint Detection
--------------------------------------------
-
-.. video:: _static/constraint_detection_add-on_intro.mp4
-   :width: 700
 

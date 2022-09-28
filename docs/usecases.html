@@ -50,9 +50,15 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Use Cases</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#use-case-1-plant-wide-analysis-of-control-loop-data">Use Case 1: Plant-Wide Analysis of Control Loop Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#use-case-2-identifying-bad-actors">Use Case 2: Identifying Bad Actors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#use-case-3-setpoint-analysis-for-constrained-model-predictive-control">Use Case 3: Setpoint Analysis for Constrained Model Predictive Control</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#use-case-3a-setpoint-constraints-are-intentional">Use Case 3a: Setpoint constraints are intentional</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#use-case-3b-setpoint-constraints-are-unintentional">Use Case 3b: Setpoint constraints are unintentional</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="codedocumentation.html">Code Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="citation.html">Citation</a></li>
 </ul>
@@ -89,7 +95,7 @@
 Process Variable, Setpoint and Mode) which results in a total of 444 signals. The plant is divided into 2 sections where both sections have 6 units each. The structure of the asset tree and the number of controllers per unit is shown
 below.</p>
 <figure class="align-default" id="id1">
-<a class="reference internal image-reference" href="_images/asset_structure_use_case_1.png"><img alt="_images/asset_structure_use_case_1.png" src="_images/asset_structure_use_case_1.png" style="width: 551.2px; height: 488.8px;" /></a>
+<a class="reference internal image-reference" href="_images/asset_structure_use_case_1.PNG"><img alt="_images/asset_structure_use_case_1.PNG" src="_images/asset_structure_use_case_1.PNG" style="width: 551.2px; height: 488.8px;" /></a>
 <figcaption>
 <p><span class="caption-text">Figure 1: Structure of the asset tree for use case 1</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
 </figcaption>
@@ -97,7 +103,7 @@ below.</p>
 <p>The asset tree was analysed over a period of one week and the Add-on looked for constraints/saturation in all controller outputs, process variables and setpoints. The copy of the asset tree was named “Plant Constraint Detection Results”.
 The thresholds were set to their default values 50% and 10%. No short capsules or gaps were specified.</p>
 <figure class="align-default" id="id2">
-<img alt="_images/user_interface_use_case_1.png" src="_images/user_interface_use_case_1.png" />
+<img alt="_images/user_interface_use_case_1.PNG" src="_images/user_interface_use_case_1.PNG" />
 <figcaption>
 <p><span class="caption-text">Figure 2: UI for use case 1</span><a class="headerlink" href="#id2" title="Permalink to this image"></a></p>
 </figcaption>
@@ -105,7 +111,7 @@ The thresholds were set to their default values 50% and 10%. No short capsules o
 <p>After the Add-on has finished the analysis, the table in the user interface is populated with the Top 30 of the most constrained/saturated signals in descending order. The table gives you a signal name and path, so that signals with a
 high ‘Constrained/Saturated Time %’ can be found easier in the treemap in the workbench. In addition, the table can be sorted by every column which gives you the option to target specific signal types or plant sections.</p>
 <figure class="align-default" id="id3">
-<img alt="_images/table_use_case_1.png" src="_images/table_use_case_1.png" />
+<img alt="_images/table_use_case_1.PNG" src="_images/table_use_case_1.PNG" />
 <figcaption>
 <p><span class="caption-text">Figure 3: Index table for use case 1</span><a class="headerlink" href="#id3" title="Permalink to this image"></a></p>
 </figcaption>
@@ -122,7 +128,7 @@ high ‘Constrained/Saturated Time %’ can be found easier in the treemap in th
 </div></blockquote>
 <p>Based on the new signals and conditions, further analysis can be executed using the tools in the workbench.</p>
 <figure class="align-default" id="id4">
-<img alt="_images/asset_tree_use_case_1.png" src="_images/asset_tree_use_case_1.png" />
+<img alt="_images/asset_tree_use_case_1.PNG" src="_images/asset_tree_use_case_1.PNG" />
 <figcaption>
 <p><span class="caption-text">Figure 4: Signals and conditions in the “Plant Constraint Detection Results” asset tree for use case 1</span><a class="headerlink" href="#id4" title="Permalink to this image"></a></p>
 </figcaption>
@@ -130,7 +136,7 @@ high ‘Constrained/Saturated Time %’ can be found easier in the treemap in th
 <p>In the workbench, three new worksheets called “OP Saturation Detection Treemap”, “PV Constraint Detection Treemap” and “SP Constraint Detection Treemap” have appeared. The treemap is coloured according to the thresholds which were set
 previously in the user interface. The ‘Constrained/Saturated Time %’ was selected as a statistic to be displayed in the treemap to facilitate the interpretation of the analysis results.</p>
 <figure class="align-default" id="id5">
-<img alt="_images/treemap_use_case_1.png" src="_images/treemap_use_case_1.png" />
+<img alt="_images/treemap_use_case_1.PNG" src="_images/treemap_use_case_1.PNG" />
 <figcaption>
 <p><span class="caption-text">Figure 5: OP treemap for use case 1</span><a class="headerlink" href="#id5" title="Permalink to this image"></a></p>
 </figcaption>
@@ -138,7 +144,7 @@ previously in the user interface. The ‘Constrained/Saturated Time %’ was sel
 <p>From the treemap, it is easy to get to the trend view by clicking on a controller panel. In trend view, the constrained/saturated periods can be investigated in more detail and underlying causes for constraints/saturation can be
 identified.</p>
 <figure class="align-default" id="id6">
-<img alt="_images/trend_view_use_case_1.png" src="_images/trend_view_use_case_1.png" />
+<img alt="_images/trend_view_use_case_1.PNG" src="_images/trend_view_use_case_1.PNG" />
 <figcaption>
 <p><span class="caption-text">Figure 6: Trendview for use case 1</span><a class="headerlink" href="#id6" title="Permalink to this image"></a></p>
 </figcaption>
@@ -150,7 +156,7 @@ identified.</p>
 Therefore, only red and green panels will appear in the treemap which makes it easier to find signals with a very a high ‘Constrained/Saturated Time %’. This use case shows how the threshold settings in the user interface can be used
 to get a treemap visualization which is tailored to the user’s requirements.</p>
 <figure class="align-default" id="id7">
-<img alt="_images/user_interface_use_case_2.png" src="_images/user_interface_use_case_2.png" />
+<img alt="_images/user_interface_use_case_2.PNG" src="_images/user_interface_use_case_2.PNG" />
 <figcaption>
 <p><span class="caption-text">Figure 7: UI for use case 2</span><a class="headerlink" href="#id7" title="Permalink to this image"></a></p>
 </figcaption>
@@ -158,14 +164,14 @@ to get a treemap visualization which is tailored to the user’s requirements.</
 <p>The analysis was performed over a period of one week and the new asset tree was named ‘Plant Bad Actors’. In the treemap, the controller outputs with a very high ‘Saturated Time %’ stand out and are easy to find, as can be seen below for
 controller 44 in Section A &gt;&gt; Unit 3.</p>
 <figure class="align-default" id="id8">
-<img alt="_images/treemap_use_case_2.png" src="_images/treemap_use_case_2.png" />
+<img alt="_images/treemap_use_case_2.PNG" src="_images/treemap_use_case_2.PNG" />
 <figcaption>
 <p><span class="caption-text">Figure 8: OP treemap for use case 2</span><a class="headerlink" href="#id8" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 <p>If a bad actor is identified, the trend view for the corresponding controller can be investigated by clicking on the controller panel.</p>
 <figure class="align-default" id="id9">
-<img alt="_images/trend_view_use_case_2.png" src="_images/trend_view_use_case_2.png" />
+<img alt="_images/trend_view_use_case_2.PNG" src="_images/trend_view_use_case_2.PNG" />
 <figcaption>
 <p><span class="caption-text">Figure 9: Trendview for use case 2</span><a class="headerlink" href="#id9" title="Permalink to this image"></a></p>
 </figcaption>
@@ -175,6 +181,53 @@ controller 44 in Section A &gt;&gt; Unit 3.</p>
 <p>Constraints and saturation in control signals are not always problematic because they can be an intended way of operation. For example, if controller output saturation is intended, then a signal with a high ‘Saturated Time %’ would
 not be a bad actor but a good actor. See <a class="reference internal" href="userguide.html#causes-for-constraints-and-saturation"><span class="std std-ref">Causes for Constraints and Saturation</span></a> for more information.</p>
 </div>
+</section>
+<section id="use-case-3-setpoint-analysis-for-constrained-model-predictive-control">
+<h2>Use Case 3: Setpoint Analysis for Constrained Model Predictive Control<a class="headerlink" href="#use-case-3-setpoint-analysis-for-constrained-model-predictive-control" title="Permalink to this headline"></a></h2>
+<p>In the third use case, the setpoints of the asset tree from use case 1 are examined. The setpoints are set by model predictive control (MPC). With MPC, a higher-level MPC controller calculates the setpoints of several
+lower-level controllers. The calculated setpoints can be constrained. This is called constrained MPC. In some cases, the constraints of the setpoints can be a process optimum. In this case, it is desired that a setpoint is at its
+constraint as often as possible in order to drive the process variable to the optimum (Use Case 3a). However, it may also not be desirable for a setpoint to always hit its constraint (Use Case 3b). For both cases, the <strong>Constraint
+Detection Add-on</strong> can be used.</p>
+<p>In the first step, the ‘Plant’ asset tree was selected and the setpoint checkbox was activated so that a treemap for the setpoints is generated by the add-on. The new asset tree was named “Plant MPC Analysis”. The thresholds were set to
+60% and 20%.</p>
+<figure class="align-default" id="id10">
+<img alt="_images/user_interface_use_case_3.PNG" src="_images/user_interface_use_case_3.PNG" />
+<figcaption>
+<p><span class="caption-text">Figure 10: UI for use case 3</span><a class="headerlink" href="#id10" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>The <strong>Constraint Detection Add-on</strong> generated the treemap below for ‘Plant MPC Analysis &gt;&gt; Section A &gt;&gt; Unit 4’. There are two ways of interpreting this treemap depending on whether setpoint constraints are intentional or unintentional.</p>
+<figure class="align-default" id="id11">
+<img alt="_images/treemap_use_case_3.PNG" src="_images/treemap_use_case_3.PNG" />
+<figcaption>
+<p><span class="caption-text">Figure 11: SP treemap for use case 3</span><a class="headerlink" href="#id11" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<section id="use-case-3a-setpoint-constraints-are-intentional">
+<h3>Use Case 3a: Setpoint constraints are intentional<a class="headerlink" href="#use-case-3a-setpoint-constraints-are-intentional" title="Permalink to this headline"></a></h3>
+<p>If setpoint constraints are intentional, setpoints with a high ‘Constrained Time %’ are good actors. That means that all red panels in the treemap show the intended way of operation. On the other hand, setpoints with a low
+‘Constrained Time %’ will be shown as green panels in the treemap as they do not follow the intended way of operation. Consequently, the time trends of green panels can be investigated to determine why the setpoint is not driven to the
+optimum.</p>
+<figure class="align-default" id="id12">
+<img alt="_images/trend_view_2_use_case_3.PNG" src="_images/trend_view_2_use_case_3.PNG" />
+<figcaption>
+<p><span class="caption-text">Figure 12: Trend view of the setpoint of controller 60 for use case 3</span><a class="headerlink" href="#id12" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="use-case-3b-setpoint-constraints-are-unintentional">
+<h3>Use Case 3b: Setpoint constraints are unintentional<a class="headerlink" href="#use-case-3b-setpoint-constraints-are-unintentional" title="Permalink to this headline"></a></h3>
+<p>If setpoint constraints are unintentional, setpoints with a low ‘Constrained Time %’ are good actors. That means that all green panels in the treemap show the intended way of operation. On the other hand, setpoints with a high
+‘Constrained Time %’ will be shown as red panels in the treemap as they do not follow the intended way of operation. Consequently, the time trends of red panels can be investigated to determine why the setpoint is reaching a constraint.</p>
+<figure class="align-default" id="id13">
+<img alt="_images/trend_view_1_use_case_3.PNG" src="_images/trend_view_1_use_case_3.PNG" />
+<figcaption>
+<p><span class="caption-text">Figure 13: Trend view of the setpoint of controller 90 for use case 3</span><a class="headerlink" href="#id13" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>This use case illustrates how constraints can be both intentional and unintentional in control loops. Furthermore, it should be noted that even if constrained MPC is used, it is likely that there are both intentional setpoint constraints
+and unintentional setpoint constraints within the same plant. Therefore, each control loop should be considered individually.</p>
+</section>
 </section>
 </section>
 

@@ -10,6 +10,7 @@ Welcome to seeq-constraintdetection's documentation!
    userguide
    usecases
    codedocumentation
+   changelog
    license
    citation
 
