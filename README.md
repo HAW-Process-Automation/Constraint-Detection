@@ -11,11 +11,9 @@ Add-on analyses the OP, SP, PV and MV and and generates a worksheet in treemap v
 [Documentation for **seeq-constraintdetection**](https://constraint-detection.readthedocs.io/en/latest/index.html)
 
 # User Guide
-[**seeq-constraintdetection** User Guide](https://constraint-detection.readthedocs.io/en/latest/userguide.html) provides an explanation of the required asset tree structure and the workflow in the user interface. The video below shows how to use the Add-on to perform a plant-wide analysis of control loop data.
+[**seeq-constraintdetection** User Guide](https://constraint-detection.readthedocs.io/en/latest/userguide.html) provides an explanation of the required asset tree structure and the workflow in the user interface. The video below gives an introduction about the Constraint Detection Add-on.
 
-https://user-images.githubusercontent.com/111488243/190984559-b1b7d7b1-7782-437c-8ed6-e4f5cb3d411e.mp4
-
-[Video in higher quality](https://constraint-detection.readthedocs.io/en/latest/userguide.html#video-user-guide)
+https://user-images.githubusercontent.com/111488243/192772896-1b0b19a9-c70c-4486-994b-a8a13f5eb830.mp4
 
 # Installation
 The backend of **seeq-constraintdetection** requires **Python 3.7** or later.
