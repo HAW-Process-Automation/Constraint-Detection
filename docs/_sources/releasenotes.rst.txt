@@ -1,7 +1,7 @@
-Changelog
-=========
+Release Notes
+=============
 
-v0.0.1
+v0.0.2
 ------
 
 Initial open-source version of **seeq-constraintdetection**

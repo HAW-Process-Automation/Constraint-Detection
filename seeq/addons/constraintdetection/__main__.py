@@ -55,7 +55,7 @@ def install_app(sdl_url_, *, sort_key=None, permissions_group: list = None, perm
         description="Detect constraints and saturation in control loop data",
         iconClass="fa fa-th",
         targetUrl=f'{sdl_url_}/apps/{DEPLOYMENT_FOLDER}/{DEPLOYMENT_NOTEBOOK}?'
-                  f'workbookId={{workbookId}}&worksheetId={{worksheetId}}',
+                  f'workbookId={{workbookId}}&worksheetId={{worksheetId}}&workstepId={{workstepId}}',
         linkType="window",
         windowDetails="toolbar=0,location=0,left=800,top=400,height=1000,width=1400",
         sortKey=sort_key,

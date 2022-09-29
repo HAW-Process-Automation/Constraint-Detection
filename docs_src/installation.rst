@@ -24,7 +24,7 @@ User Installation (Seeq Data Lab)
 The latest build of the project can be found `here <https://pypi.org>`_ as a wheel file. The file is published as as courtesy and does not imply any guarantee or obligation for support from the publisher.
 
 1. Create a **new** Seeq Data Lab project and open the **Terminal** window
-2. Run :code:`pip install seeq-constraintdetection`
+2. Run :code:`pip install constraintdetection`
 3. Run :code:`python -m seeq.addons.constraintdetection`
 
 Follow the instructions when prompted. ("Username or Access Key" is what you use to log in to Seeq. "Password" is your password for logging into Seeq.)

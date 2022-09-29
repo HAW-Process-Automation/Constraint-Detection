@@ -6,11 +6,11 @@ Welcome to seeq-constraintdetection's documentation!
    :caption: Contents:
 
    introduction
-   installation
+   releasenotes
    userguide
    usecases
    codedocumentation
-   changelog
+   installation
    license
    citation
 

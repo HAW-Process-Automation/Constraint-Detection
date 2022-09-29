@@ -21,8 +21,8 @@ sys.path.insert(0, os.path.abspath('../.'))
 project = 'seeq-constraintdetection'
 copyright = '2022, Seeq Corporation'
 author = 'Lea Tiedemann'
-release = '0.0.1'
-version = '0.0.1'
+release = '0.0.2'
+version = '0.0.2'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
