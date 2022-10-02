@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>User Guide &mdash; seeq-constraintdetection 0.0.2 documentation</title>
+  <title>User Guide &mdash; seeq-constraintdetection 0.0.3 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="_static/seeq-favicon.ico"/>
@@ -32,7 +32,7 @@
             <img src="_static/Seeq_logo_darkBlue_sm.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.0.2
+                0.0.3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -48,7 +48,10 @@
 <li class="toctree-l1"><a class="reference internal" href="releasenotes.html">Release Notes</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">User Guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#video-user-guide">Video: User Guide</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#asset-tree-for-constraint-detection-add-on">Asset Tree for Constraint Detection Add-on</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#asset-tree-for-constraint-detection-add-on">Asset Tree for Constraint Detection Add-on</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#template-notebooks">Template Notebooks</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#workflow">Workflow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#support">Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#causes-for-constraints-and-saturation">Causes for Constraints and Saturation</a></li>
@@ -103,13 +106,17 @@
 <p>The Constraint Detection Add-on analyses a complete asset structure of control signals. In order for the Add-on to recognize which signals belong to which controller and which signal type is involved, the asset tree must be available in
 a specific structure. Each control signal must be assigned to a controller and must be named according to its signal type. This is necessary so that the results can be displayed correctly in the treemap. Accepted names for the control
 signals are only “Controller Output”, “Setpoint”, “Process Variable”, “Manipulated Variable” and “Mode”. No specific naming is required for the higher-level controllers. The controller can be named “Controller 1” or “FIC 1” or
-completely different. Template code for generating the required asset tree in Seeq Data Lab can be found <a class="reference external" href="https://github.com/HAW-Process-Automation/Constraint-Detection/tree/main/Template%20Code%20for%20Asset%20Tree">here</a>.</p>
+completely different.</p>
+<section id="template-notebooks">
+<h3>Template Notebooks<a class="headerlink" href="#template-notebooks" title="Permalink to this headline"></a></h3>
+<p>Template code for generating the required asset tree in Seeq Data Lab can be found <a class="reference external" href="https://github.com/HAW-Process-Automation/Constraint-Detection/tree/main/Template%20Code%20for%20Asset%20Tree">here</a>.</p>
 <figure class="align-default" id="id2">
 <img alt="_images/template_asset_tree.PNG" src="_images/template_asset_tree.PNG" />
 <figcaption>
 <p><span class="caption-text">Figure 1: Example for an asset tree in the required structure</span><a class="headerlink" href="#id2" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
+</section>
 </section>
 <section id="workflow">
 <h2>Workflow<a class="headerlink" href="#workflow" title="Permalink to this headline"></a></h2>

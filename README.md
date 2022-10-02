@@ -30,10 +30,10 @@ If you want to install **seeq-constraintdetection** as a Seeq Add-on, you will n
 * Enable Add-on in the Seeq server
 
 ## User Installation (Seeq Data Lab)
-The latest build of the project can be found [here](https://pypi.org) as a wheel file. The file is published as a courtesy and does not imply any guarantee or obligation for support from the publisher.
+The latest build of the project can be found [here](https://pypi.org/project/seeq-constraintdetection/) as a wheel file. The file is published as a courtesy and does not imply any guarantee or obligation for support from the publisher.
 
 1. Create a **new** Seeq Data Lab project and open the **Terminal** window
-2. Run `pip install constraintdetection`
+2. Run `pip install seeq-constraintdetection`
 3. Run `python -m seeq.addons.constraintdetection`
 4. Follow the instructions when prompted. ("Username or Access Key" is what you use to log in to Seeq. "Password" is your password for logging into Seeq.)
 
@@ -75,7 +75,7 @@ Maintainer: Lea Tiedemann
 
 Please cite this work as:
 ```
-seeq-constraintdetection v0.0.2
+seeq-constraintdetection v0.0.3
 Seeq Corporation, 2022
 https://github.com/HAW-Process-Automation/Constraint-Detection
 ```

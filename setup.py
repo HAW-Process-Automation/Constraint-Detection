@@ -21,7 +21,7 @@ with open("seeq/addons/constraintdetection/_version.py", "r+") as f:
         raise
 
 setup_args = dict(
-    name='constraintdetection',
+    name='seeq-constraintdetection',
     version=version_scope['__version__'],
     author="Lea Tiedemann",
     author_email="lea.tiedemann@seeq.com",

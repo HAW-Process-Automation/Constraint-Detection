@@ -14,7 +14,11 @@ Asset Tree for Constraint Detection Add-on
 The Constraint Detection Add-on analyses a complete asset structure of control signals. In order for the Add-on to recognize which signals belong to which controller and which signal type is involved, the asset tree must be available in 
 a specific structure. Each control signal must be assigned to a controller and must be named according to its signal type. This is necessary so that the results can be displayed correctly in the treemap. Accepted names for the control 
 signals are only "Controller Output", "Setpoint", "Process Variable", "Manipulated Variable" and "Mode". No specific naming is required for the higher-level controllers. The controller can be named "Controller 1" or "FIC 1" or 
-completely different. Template code for generating the required asset tree in Seeq Data Lab can be found `here <https://github.com/HAW-Process-Automation/Constraint-Detection/tree/main/Template%20Code%20for%20Asset%20Tree>`_.
+completely different.
+
+Template Notebooks
+++++++++++++++++++
+Template code for generating the required asset tree in Seeq Data Lab can be found `here <https://github.com/HAW-Process-Automation/Constraint-Detection/tree/main/Template%20Code%20for%20Asset%20Tree>`_.
 
 .. figure:: _static/images/template_asset_tree.PNG
 
