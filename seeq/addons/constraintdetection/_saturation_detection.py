@@ -324,7 +324,7 @@ def generate_constraint_index_table(saturation_index_df, new_asset_tree_name):
                 if new_asset_tree_name == '':
                     # highest level of the path. The word "Copy" is appended if the user has not specified a name for
                     # the asset tree copy.
-                    new_path_name_part = split_index[x] + ' Copy >> '
+                    new_path_name_part = split_index[x] + ' Constraint Monitor >> '
                     saturation_index_df['Path'][i] = new_path_name_part
                 elif new_asset_tree_name != '':
                     # highest level of the path. The user specified name for the asset tree copy is used.

@@ -75,7 +75,7 @@ Maintainer: Lea Tiedemann
 
 Please cite this work as:
 ```
-seeq-constraintdetection v0.0.3
+seeq-constraintdetection v0.0.4
 Seeq Corporation, 2022
 https://github.com/HAW-Process-Automation/Constraint-Detection
 ```
