@@ -49,23 +49,6 @@ Workflow
 
    Figure 2: Worflow in the UI
 
-Support
--------
-
-If you are using the Constraint Detection Add-on and need support, you can click on the menu at the top right. There you will find the options 'Support' and 'Documentation'. 
-
-.. figure:: _static/images/userguide_support_1.PNG
-
-   Figure 3: Hamburger menu in the UI
-
-If you encounter an error while running the add-on or you need help with a special use case, click on 'Support'. You will automatically be redirected to the `GitHub Issues <https://github.com/HAW-Process-Automation/Constraint-Detection/issues>`_ of the Constraint Detection Add-on and can open a new issue there. 
-Support requests are handled by the Department of Automation of the Hamburg University of Applied Sciences in Germany. For general questions about the use of the add-on, you can click on 'Documentation'. This will redirect you to this 
-documentation.
-
-.. figure:: _static/images/userguide_support_2.PNG
-
-   Figure 4: GitHub Issues
-
 .. _Causes for Constraints and Saturation:
 
 Causes for Constraints and Saturation

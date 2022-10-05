@@ -9,6 +9,7 @@ Welcome to seeq-constraintdetection's documentation!
    releasenotes
    userguide
    usecases
+   support
    codedocumentation
    installation
    license
