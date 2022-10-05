@@ -52,7 +52,7 @@ We welcome new contributors of all experience levels. The Development Guide has 
 ## Source code
 You can get started by cloning the repository with the command: 
 ```
-git clone git@github.com:HAW-Process-Automation/seeq-constraintdetection.git
+git clone git@github.com:HAW-Process-Automation/Constraint-Detection.git
 ```
 
 ## Installation from source
