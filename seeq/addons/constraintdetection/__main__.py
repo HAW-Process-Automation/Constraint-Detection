@@ -12,6 +12,8 @@ from .utils import get_datalab_project_id, addon_tool_management
 NB_EXTENSIONS = ['widgetsnbextension', 'ipyvuetify', 'ipyvue']
 DEPLOYMENT_FOLDER = 'deployment'
 DEPLOYMENT_NOTEBOOK = "constraint_detection_master.ipynb"
+DEFAULT_GROUP = ['Everyone']
+DEFAULT_USERS = []
 
 def permissions_defaults(permissions_group: list, permissions_users: list):
     if permissions_group is None:
@@ -46,27 +48,29 @@ def install_app(sdl_url_, *, sort_key=None, permissions_group: list = None, perm
     sdl_url_ = sanitize_sdl_url(sdl_url_)
 
     if sort_key is None:
-        sort_key = 'a'
+        sort_key = 'c'
 
-    permissions_group, permissions_users = permissions_defaults(permissions_group, permissions_users)
+    permissions_group = permissions_group if permissions_group else DEFAULT_GROUP
+    permissions_users = permissions_users if permissions_users else DEFAULT_USERS
 
-    add_on_details = dict(
-        name='Constraint Detection',
-        description="Detect constraints and saturation in control loop data",
-        iconClass="fa fa-th",
-        targetUrl=f'{sdl_url_}/apps/{DEPLOYMENT_FOLDER}/{DEPLOYMENT_NOTEBOOK}?'
-                  f'workbookId={{workbookId}}&worksheetId={{worksheetId}}&workstepId={{workstepId}}',
-        linkType="window",
-        windowDetails="toolbar=0,location=0,left=800,top=400,height=1000,width=1400",
-        sortKey=sort_key,
-        reuseWindow=True,
-        permissions=dict(groups=permissions_group,
-                         users=permissions_users)
-    )
+    add_on_details = {
+        "Name": 'Constraint Detection',
+        "Description": "Detect constraints and saturation in control loop time series data",
+        "Icon": "fa fa-th",
+        "Target URL": f'{sdl_url_}/apps/{DEPLOYMENT_FOLDER}/{DEPLOYMENT_NOTEBOOK}',
+        "Link Type": "window",
+        "Window Details": "toolbar=0,location=0,left=800,top=400,height=1000,width=1400",
+        "Sort Key": sort_key,
+        "Reuse Window": True,
+        "Groups": permissions_group,
+        "Users": permissions_users
+    }
 
     copy(des_folder=DEPLOYMENT_FOLDER, src_folder='deployment_notebook',
          overwrite_folder=False, overwrite_contents=True)
-    addon_tool_management(add_on_details)
+    print(f'\nCopied the notebook used by the Add-on to {DEPLOYMENT_FOLDER}')
+
+    spy.addons.install(add_on_details, include_workbook_parameters=True, update_tool=True, update_permissions=True)
 
 
 def install_nbextensions():
